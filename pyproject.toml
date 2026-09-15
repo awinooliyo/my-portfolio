@@ -1,0 +1,17 @@
+[project]
+name = "portfolio"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=5.1,<6.0",
+    "gunicorn>=21.2.0",
+    "pillow>=10.4.0",
+    "python-dotenv>=1.0.1",
+    "whitenoise>=6.7.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "django-debug-toolbar>=4.4.0",
+    "playwright>=1.62.0",
+]

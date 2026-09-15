@@ -1,0 +1,315 @@
+/*
+  Design system — Erick Awino Portfolio
+  ──────────────────────────────────────
+  Colour theory: 60-30-10 rule
+    60% → deep navy  #0a192f  (dominant — calm, professional, tech)
+    30% → mid navy   #112240  (cards, sections — clear separation)
+    10% → orange     #f97316  (one warm accent — energy, action)
+
+  UX laws applied:
+    Fitts's Law      → large tap targets (min 44px), prominent CTA
+    Hick's Law       → one primary CTA per section, reduce decisions
+    Von Restorff     → orange CTA stands out among grey outlines
+    Law of Proximity → related elements grouped, generous gap between groups
+    F-pattern        → name → role → bio → CTAs reads top-left to right
+    WCAG AA contrast → body slate #ccd6f6 on navy = 8.6:1 ✓
+*/
+
+/* ── Custom properties ──────────────────────────── */
+:root {
+  --navy:        #0a192f;
+  --navy-mid:    #112240;
+  --navy-light:  #1d3461;
+  --text:        #ccd6f6;   /* 8.6:1 on --navy */
+  --muted:       #8892b0;   /* 4.6:1 on --navy — AA compliant */
+  --orange:      #f97316;
+  --orange-lite: #fb923c;
+  --border:      rgba(100,120,170,0.15);
+  --border-hover:rgba(249,115,22,0.40);
+}
+
+/* ── Reset / base ───────────────────────────────── */
+html   { scroll-behavior: smooth; }
+section{ scroll-margin-top: 4rem; }
+body   { background: var(--navy); color: var(--text); }
+
+::-webkit-scrollbar        { width: 5px; }
+::-webkit-scrollbar-track  { background: var(--navy); }
+::-webkit-scrollbar-thumb  { background: var(--navy-light); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--orange); }
+
+/* ── Typography scale (consistent modular scale) ─ */
+/* H1 96px | H2 48px | H3 20px | body 17px | label 11px */
+
+/* ── Accent text ────────────────────────────────── */
+.accent { color: var(--orange); }
+
+/* ── Logo gradient (EA.) ────────────────────────── */
+.logo-gradient {
+  background: linear-gradient(135deg, var(--orange), #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Hero ───────────────────────────────────────── */
+.hero-section {
+  background:
+    radial-gradient(ellipse 55% 65% at  8% 30%, rgba(249,115,22,0.14), transparent),
+    radial-gradient(ellipse 45% 55% at 90% 15%, rgba(244,114,182,0.10), transparent),
+    radial-gradient(ellipse 50% 60% at 80% 80%, rgba(29,52,97,   0.60), transparent),
+    var(--navy);
+}
+
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(249,115,22,0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ── Navbar ─────────────────────────────────────── */
+.nav-scrolled {
+  background: rgba(10,25,47,0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+/* ── Photo ring ─────────────────────────────────── */
+.photo-ring {
+  position: relative;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--orange), #f472b6 60%, #818cf8);
+  flex-shrink: 0;
+}
+.photo-ring::before {
+  content: '';
+  position: absolute;
+  inset: -12px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), #f472b6);
+  filter: blur(24px);
+  opacity: 0.20;
+  z-index: -1;
+  animation: glow 4s ease-in-out infinite;
+}
+@keyframes glow {
+  0%,100% { opacity: 0.16; }
+  50%      { opacity: 0.28; }
+}
+.photo-inner {
+  width: 100%; height: 100%;
+  border-radius: 50%; overflow: hidden;
+  background: var(--navy-mid);
+  display: flex; align-items: center; justify-content: center;
+}
+.photo-inner img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ── Buttons (Von Restorff — orange stands out) ── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: .8rem 1.75rem;
+  background: var(--orange);
+  color: #fff;
+  font-weight: 700;
+  font-size: .925rem;
+  border-radius: 10px;
+  border: 2px solid var(--orange);
+  transition: background .2s, box-shadow .2s, transform .15s;
+  box-shadow: 0 4px 18px rgba(249,115,22,0.35);
+  min-height: 48px; /* Fitts's Law */
+}
+.btn-primary:hover {
+  background: var(--orange-lite);
+  border-color: var(--orange-lite);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(249,115,22,0.45);
+}
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: .8rem 1.75rem;
+  background: transparent;
+  color: var(--text);
+  font-weight: 600;
+  font-size: .925rem;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  transition: border-color .2s, color .2s, background .2s;
+  min-height: 48px; /* Fitts's Law */
+}
+.btn-secondary:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+  background: rgba(249,115,22,0.06);
+}
+
+/* ── Social badge buttons ───────────────────────── */
+.social-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: .55rem 1.1rem;
+  border-radius: 9999px;
+  font-size: .8rem; font-weight: 600;
+  border: 1.5px solid var(--border);
+  color: var(--muted);
+  transition: border-color .2s, color .2s, background .2s;
+  min-height: 40px; /* Fitts's Law */
+}
+.social-badge:hover { border-color: var(--orange); color: var(--text); }
+.social-badge-gh:hover  { border-color: #e2e8f0; color: #fff; }
+.social-badge-li:hover  { border-color: #0a66c2; color: #60b8e0; }
+
+/* ── Cards ──────────────────────────────────────── */
+.card {
+  background: var(--navy-mid);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  transition: border-color .25s, transform .25s, box-shadow .25s;
+}
+.card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(249,115,22,0.07);
+}
+
+/* ── Section label ──────────────────────────────── */
+.section-label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .7rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: .5rem;
+}
+
+/* ── Skill chips ─────────────────────────────────  */
+/* Law of Similarity — consistent chip shape, colour by category */
+.chip {
+  display: inline-block;
+  padding: .35rem .85rem;
+  border-radius: 9999px;
+  font-size: .8rem;
+  font-weight: 500;
+  border: 1.5px solid;
+}
+.chip-backend   { background:rgba(99,179,237,.08);  color:#93c5fd; border-color:rgba(99,179,237,.22); }
+.chip-frontend  { background:rgba(167,139,250,.08); color:#c4b5fd; border-color:rgba(167,139,250,.22); }
+.chip-languages { background:rgba(52,211,153,.08);  color:#6ee7b7; border-color:rgba(52,211,153,.22); }
+.chip-devops    { background:rgba(249,115,22,.08);  color:#fdba74; border-color:rgba(249,115,22,.22); }
+.chip-arch      { background:rgba(244,114,182,.08); color:#f9a8d4; border-color:rgba(244,114,182,.22); }
+
+/* ── Resource pills ─────────────────────────────── */
+.pill { display:inline-block; padding:.25rem .7rem; border-radius:6px; font-size:.72rem; font-weight:600; border:1.5px solid; font-family:'JetBrains Mono',monospace; }
+.pill-book     { background:rgba(249,115,22,.10); color:#fdba74; border-color:rgba(249,115,22,.30); }
+.pill-tutorial { background:rgba(167,139,250,.10);color:#c4b5fd; border-color:rgba(167,139,250,.30); }
+.pill-article  { background:rgba(52,211,153,.10); color:#6ee7b7; border-color:rgba(52,211,153,.30); }
+.pill-course   { background:rgba(99,179,237,.10); color:#93c5fd; border-color:rgba(99,179,237,.30); }
+.pill-video    { background:rgba(244,114,182,.10);color:#f9a8d4; border-color:rgba(244,114,182,.30); }
+
+/* ── Badges ─────────────────────────────────────── */
+.badge-available {
+  background: rgba(52,211,153,.10);
+  border: 1.5px solid rgba(52,211,153,.30);
+  color: #6ee7b7;
+}
+.badge-building {
+  background: rgba(249,115,22,.10);
+  border: 1.5px solid rgba(249,115,22,.30);
+  color: var(--orange-lite);
+}
+
+/* ── Form inputs ─────────────────────────────────── */
+.form-input {
+  width: 100%;
+  background: rgba(17,34,64,.8);
+  border: 1.5px solid var(--border);
+  color: var(--text);
+  border-radius: 10px;
+  padding: .75rem 1rem;
+  font-size: .9rem;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  min-height: 48px; /* Fitts's Law */
+}
+.form-input::placeholder { color: rgba(136,146,176,.5); }
+.form-input:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(249,115,22,.10);
+}
+.form-input option { background: var(--navy-mid); }
+
+/* ── Photo rotation (3 images, 5s each = 15s cycle) */
+.photo-slide {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.photo-slide img { width: 100%; height: 100%; object-fit: cover; }
+
+/* CSS-only crossfade — no JS needed */
+@keyframes photo-rotate {
+  0%    { opacity: 0; }
+  5%    { opacity: 1; }
+  30%   { opacity: 1; }
+  35%   { opacity: 0; }
+  100%  { opacity: 0; }
+}
+.photo-slide:nth-child(1) { animation: photo-rotate 15s 0s  infinite; }
+.photo-slide:nth-child(2) { animation: photo-rotate 15s 5s  infinite; }
+.photo-slide:nth-child(3) { animation: photo-rotate 15s 10s infinite; }
+
+/* ── Stars ───────────────────────────────────────── */
+.star-filled { color: #fbbf24; }
+.star-empty  { color: rgba(255,255,255,.12); }
+
+/* ── Scroll reveal ───────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.in-view { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: .08s; }
+.reveal-delay-2 { transition-delay: .16s; }
+.reveal-delay-3 { transition-delay: .24s; }
+
+/* ── Timeline ────────────────────────────────────── */
+.timeline-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--orange); flex-shrink: 0; margin-top: 6px;
+  box-shadow: 0 0 8px rgba(249,115,22,.5);
+}
+.timeline-line {
+  width: 1px; flex: 1;
+  background: linear-gradient(to bottom, rgba(249,115,22,.25), transparent);
+  margin: 4px 0 0 4px;
+}
+
+/* ── Tab ─────────────────────────────────────────── */
+.tab-btn { transition: color .2s, border-color .2s; }
+.tab-btn.active { color: var(--orange); border-bottom: 2px solid var(--orange); }
+
+/* ── Prose ───────────────────────────────────────── */
+.prose h2,.prose h3 { color: #e6f1ff; }
+.prose a  { color: var(--orange); }
+.prose code {
+  font-family:'JetBrains Mono',monospace;
+  background: var(--navy-light);
+  padding:.15em .4em; border-radius:4px; font-size:.85em;
+  color: #f9a8d4;
+}
+.prose pre {
+  background: var(--navy-mid);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  overflow-x: auto;
+}
+
+.line-clamp-2 { display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden; }
+.line-clamp-3 { display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden; }

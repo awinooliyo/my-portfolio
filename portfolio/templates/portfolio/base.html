@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Erick Awino — Senior Full-Stack Engineer{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}Senior Full-Stack Software Engineer based in Nairobi, Kenya. Specializing in Django, Python, React, and production-grade web systems.{% endblock %}">
+  <meta property="og:title" content="Erick Awino — Senior Full-Stack Engineer">
+  <meta property="og:description" content="Backend-heavy Full-Stack · Python · Django · React · Vue · Docker">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+          colors: {
+            dark: { DEFAULT: '#07080f', card: '#0e1020', alt: '#0b0d1a' }
+          }
+        }
+      }
+    }
+  </script>
+
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-[#0a192f] text-[#ccd6f6] font-sans antialiased">
+
+  <!-- NAV -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <a href="{% url 'home' %}" class="font-mono font-black text-xl logo-gradient">EA.</a>
+
+        <div class="hidden md:flex items-center gap-8">
+          <a href="{% url 'home' %}#about"    class="text-sm font-medium text-slate-400 hover:text-white transition">About</a>
+          <a href="{% url 'home' %}#projects" class="text-sm font-medium text-slate-400 hover:text-white transition">Projects</a>
+          <a href="{% url 'home' %}#skills"   class="text-sm font-medium text-slate-400 hover:text-white transition">Skills</a>
+          <a href="{% url 'home' %}#blog"     class="text-sm font-medium text-slate-400 hover:text-white transition">Blog</a>
+          <a href="{% url 'home' %}#book"     class="text-sm font-medium text-slate-400 hover:text-white transition">Book a Call</a>
+          <a href="{% url 'home' %}#contact" class="btn-primary !py-2 !px-5 !min-h-0 text-sm">
+            Contact
+          </a>
+        </div>
+
+        <button id="menu-btn" class="md:hidden text-slate-400 hover:text-white p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden bg-[#141728] border-t border-white/5">
+      <div class="px-6 py-4 flex flex-col gap-3">
+        <a href="{% url 'home' %}#about"    class="text-slate-300 hover:text-white transition py-1">About</a>
+        <a href="{% url 'home' %}#projects" class="text-slate-300 hover:text-white transition py-1">Projects</a>
+        <a href="{% url 'home' %}#skills"   class="text-slate-300 hover:text-white transition py-1">Skills</a>
+        <a href="{% url 'home' %}#blog"     class="text-slate-300 hover:text-white transition py-1">Blog</a>
+        <a href="{% url 'home' %}#book"     class="text-slate-300 hover:text-white transition py-1">Book a Call</a>
+        <a href="{% url 'home' %}#contact"  class="text-violet-400 hover:text-violet-300 transition py-1">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- FLASH MESSAGES -->
+  {% if messages %}
+  <div id="flash-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 max-w-sm">
+    {% for message in messages %}
+    <div class="flash-msg px-4 py-3 rounded-xl text-sm font-medium shadow-2xl border
+      {% if message.tags == 'success' %}bg-emerald-950/90 text-emerald-300 border-emerald-800/60
+      {% else %}bg-red-950/90 text-red-300 border-red-800/60{% endif %}">
+      {{ message }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% block content %}{% endblock %}
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/5 py-10 bg-[#0d0f1e]">
+    <div class="max-w-6xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div>
+        <p class="font-mono font-black text-lg text-gradient mb-1">EA.</p>
+        <p class="text-slate-600 text-sm">© {% now "Y" %} Erick Awino · Built with Django</p>
+      </div>
+      <div class="flex items-center gap-5">
+        {% include "portfolio/partials/social_icons.html" with size="w-5 h-5" %}
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('nav-scrolled', window.scrollY > 20);
+    });
+
+    document.getElementById('menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    setTimeout(() => {
+      document.querySelectorAll('.flash-msg').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.5s';
+        setTimeout(() => el.remove(), 500);
+      });
+    }, 5000);
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
