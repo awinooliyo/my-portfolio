@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}Resume — Erick Awino{% endblock %}
-{% block meta_description %}Erick Awino's resume. Full-Stack Software Engineer: Python, Django, TypeScript, React, Java. Open to remote and hybrid roles worldwide.{% endblock %}
+{% block meta_description %}Erick Awino — Senior Software Engineer. Python, Django, Vue.js, Nuxt.js, Java, Spring Boot. Open to remote and hybrid roles worldwide.{% endblock %}
 
 {% block content %}
 
@@ -62,6 +62,10 @@
               </a>
             </li>
             <li class="flex items-center gap-2.5">
+              <i data-lucide="phone" class="w-4 h-4 text-[#7a96bb] flex-shrink-0"></i>
+              <span class="text-sm text-[#3d5578]">+254 728 825 233</span>
+            </li>
+            <li class="flex items-center gap-2.5">
               <i data-lucide="map-pin" class="w-4 h-4 text-[#7a96bb] flex-shrink-0"></i>
               <span class="text-sm text-[#3d5578]">Nairobi, Kenya</span>
             </li>
@@ -87,10 +91,13 @@
           <h2 class="text-xs font-mono uppercase tracking-widest text-[#059669] mb-4">Skills</h2>
           <div class="space-y-4">
             <div>
-              <p class="text-xs font-mono text-[#059669] mb-2">Expert · Deep</p>
+              <p class="text-xs font-mono text-[#059669] mb-2">Expert · Core Stack</p>
               <div class="flex flex-wrap gap-1.5">
                 <span class="chip skill-expert" style="font-size:0.67rem;">Python</span>
                 <span class="chip skill-expert" style="font-size:0.67rem;">Django</span>
+                <span class="chip skill-expert" style="font-size:0.67rem;">DRF</span>
+                <span class="chip skill-expert" style="font-size:0.67rem;">Vue.js</span>
+                <span class="chip skill-expert" style="font-size:0.67rem;">Nuxt.js</span>
                 <span class="chip skill-expert" style="font-size:0.67rem;">PostgreSQL</span>
                 <span class="chip skill-expert" style="font-size:0.67rem;">REST APIs</span>
                 <span class="chip skill-expert" style="font-size:0.67rem;">Docker</span>
@@ -102,25 +109,30 @@
               <p class="text-xs font-mono text-[#2563eb] mb-2">Strong · Proficient</p>
               <div class="flex flex-wrap gap-1.5">
                 <span class="chip skill-strong" style="font-size:0.67rem;">TypeScript</span>
+                <span class="chip skill-strong" style="font-size:0.67rem;">JavaScript</span>
+                <span class="chip skill-strong" style="font-size:0.67rem;">Java</span>
+                <span class="chip skill-strong" style="font-size:0.67rem;">Spring Boot</span>
                 <span class="chip skill-strong" style="font-size:0.67rem;">React</span>
-                <span class="chip skill-strong" style="font-size:0.67rem;">Vue.js</span>
-                <span class="chip skill-strong" style="font-size:0.67rem;">Next.js</span>
-                <span class="chip skill-strong" style="font-size:0.67rem;">FastAPI</span>
-                <span class="chip skill-strong" style="font-size:0.67rem;">Tailwind CSS</span>
-                <span class="chip skill-strong" style="font-size:0.67rem;">CI/CD</span>
+                <span class="chip skill-strong" style="font-size:0.67rem;">MySQL</span>
+                <span class="chip skill-strong" style="font-size:0.67rem;">Redis</span>
+                <span class="chip skill-strong" style="font-size:0.67rem;">AWS</span>
                 <span class="chip skill-strong" style="font-size:0.67rem;">Git</span>
+                <span class="chip skill-strong" style="font-size:0.67rem;">CI/CD</span>
               </div>
             </div>
             <div>
               <p class="text-xs font-mono text-[#7c3aed] mb-2">Competent</p>
               <div class="flex flex-wrap gap-1.5">
-                <span class="chip skill-good" style="font-size:0.67rem;">Java</span>
-                <span class="chip skill-good" style="font-size:0.67rem;">Spring Boot</span>
-                <span class="chip skill-good" style="font-size:0.67rem;">Angular</span>
-                <span class="chip skill-good" style="font-size:0.67rem;">C</span>
+                <span class="chip skill-good" style="font-size:0.67rem;">PHP</span>
+                <span class="chip skill-good" style="font-size:0.67rem;">Go</span>
                 <span class="chip skill-good" style="font-size:0.67rem;">Flask</span>
-                <span class="chip skill-good" style="font-size:0.67rem;">SQLAlchemy</span>
-                <span class="chip skill-good" style="font-size:0.67rem;">Bash</span>
+                <span class="chip skill-good" style="font-size:0.67rem;">Node.js</span>
+                <span class="chip skill-good" style="font-size:0.67rem;">MongoDB</span>
+                <span class="chip skill-good" style="font-size:0.67rem;">Kubernetes</span>
+                <span class="chip skill-good" style="font-size:0.67rem;">Terraform</span>
+                <span class="chip skill-good" style="font-size:0.67rem;">Ansible</span>
+                <span class="chip skill-good" style="font-size:0.67rem;">RabbitMQ</span>
+                <span class="chip skill-good" style="font-size:0.67rem;">M-Pesa</span>
               </div>
             </div>
           </div>
@@ -128,14 +140,40 @@
 
         {# Education #}
         <div class="card p-6">
-          <h2 class="text-xs font-mono uppercase tracking-widest text-[#7c3aed] mb-4">Education</h2>
-          <h3 class="font-bold text-[#0d1b2e] text-sm leading-snug">
-            ALX Africa Software Engineering Program
-          </h3>
-          <p class="text-xs font-mono text-[#7a96bb] mt-1">2022 – 2024</p>
-          <p class="text-[#3d5578] text-xs mt-2 leading-relaxed">
-            Full-stack foundations: C, Python, JavaScript, systems programming, algorithms, and production deployment.
-          </p>
+          <h2 class="text-xs font-mono uppercase tracking-widest text-[#7c3aed] mb-5">Education</h2>
+
+          <div class="mb-5 pb-5 border-b border-[rgba(37,99,235,0.08)]">
+            <h3 class="font-bold text-[#0d1b2e] text-sm leading-snug">
+              B.Sc. Forensic Science
+            </h3>
+            <p class="text-xs font-semibold text-[#3d5578] mt-0.5">Kenyatta University</p>
+            <p class="text-xs font-mono text-[#7a96bb] mt-1">Sep 2011 – May 2015</p>
+            <p class="text-[#3d5578] text-xs mt-2 leading-relaxed">
+              Developed analytical reasoning, research discipline, evidence-based thinking, and structured investigation.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-[#0d1b2e] text-sm leading-snug">
+              Software Engineering Program
+            </h3>
+            <p class="text-xs font-semibold text-[#3d5578] mt-0.5">ALX School of Software Engineering</p>
+            <p class="text-xs font-mono text-[#7a96bb] mt-1">Feb 2023 – Dec 2024</p>
+            <p class="text-[#3d5578] text-xs mt-2 leading-relaxed">
+              Programming, algorithms, systems, databases, APIs, Linux, and Git. Projects: Airbnb clone in Python, UNIX shell, printf in C, and API development.
+            </p>
+          </div>
+        </div>
+
+        {# Continuing Education #}
+        <div class="card p-6">
+          <h2 class="text-xs font-mono uppercase tracking-widest text-[#0891b2] mb-4">Continuing Ed</h2>
+          <ul class="space-y-2">
+            <li class="text-xs text-[#3d5578]"><span class="font-semibold text-[#0d1b2e]">The Odin Project</span> — HTML, CSS, JavaScript</li>
+            <li class="text-xs text-[#3d5578]"><span class="font-semibold text-[#0d1b2e]">freeCodeCamp</span> — HTML, CSS, JavaScript</li>
+            <li class="text-xs text-[#3d5578]"><span class="font-semibold text-[#0d1b2e]">Frontend Mentor</span> — Responsive UI builds</li>
+            <li class="text-xs text-[#3d5578]"><span class="font-semibold text-[#0d1b2e]">Frontend Masters</span> — Modern web development</li>
+          </ul>
         </div>
 
         {# Availability #}
@@ -163,7 +201,7 @@
         <div class="card p-7">
           <h2 class="text-xs font-mono uppercase tracking-widest text-[#2563eb] mb-4">Summary</h2>
           <p class="text-[#3d5578] leading-relaxed">
-            Full-Stack Software Engineer with a deep vertical in Python and Django backend systems and a broad horizontal spanning TypeScript, Java, React, Vue, and C. ALX Africa Software Engineering graduate. I join teams fast, contribute early, and grow steadily. Comfortable working at any layer of the stack — from database schema to Docker deployment. Open to remote and hybrid roles worldwide.
+            Senior software engineer with hands-on experience designing and shipping production web applications, REST APIs, and backend business systems end to end — from data modeling through deployment. Core strength is in Python, Django, and Django REST Framework, with a modern frontend stack in Vue.js and Nuxt.js, and working proficiency in Java and Spring Boot for expanded backend range. Background combines software engineering with years of technical writing, research, and SEO consulting — which translates into unusually clear system documentation, precise requirements analysis, and communication with non-technical stakeholders. Focused on pragmatic architecture: building the right amount of complexity for the problem.
           </p>
         </div>
 
