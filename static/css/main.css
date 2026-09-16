@@ -196,16 +196,16 @@ body    { background: var(--bg); color: var(--text); font-family: 'Inter', syste
   border-radius: 50%; padding: 2px;
   background: linear-gradient(270deg, #2563eb, #0891b2, #059669, #d97706, #2563eb);
   background-size: 400% 400%;
-  animation: border-spin 8s ease infinite;
+  animation: border-spin 13s ease infinite;
   flex-shrink: 0;
 }
 .photo-ring::before {
   content: ''; position: absolute; inset: -14px; border-radius: 50%;
   background: linear-gradient(135deg, #2563eb, #0891b2);
   filter: blur(28px); opacity: .20; z-index: -1;
-  animation: glow 5s ease-in-out infinite;
+  animation: glow 7s ease-in-out infinite;
 }
-@keyframes glow { 0%,100% { opacity: .15; } 50% { opacity: .28; } }
+@keyframes glow { 0%,100% { opacity: .12; } 50% { opacity: .22; } }
 .photo-inner {
   width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
   background: var(--surface-2);
@@ -285,12 +285,16 @@ body    { background: var(--bg); color: var(--text); font-family: 'Inter', syste
 }
 
 /* ── Scroll reveal ─────────────────────────────────── */
-.reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .65s cubic-bezier(0.16,1,0.3,1), transform .65s cubic-bezier(0.16,1,0.3,1);
+}
 .reveal.in-view { opacity:1; transform:none; }
-.reveal-delay-1 { transition-delay:.10s; }
-.reveal-delay-2 { transition-delay:.20s; }
-.reveal-delay-3 { transition-delay:.30s; }
-.reveal-delay-4 { transition-delay:.40s; }
+.reveal-delay-1 { transition-delay:.08s; }
+.reveal-delay-2 { transition-delay:.15s; }
+.reveal-delay-3 { transition-delay:.22s; }
+.reveal-delay-4 { transition-delay:.29s; }
 
 /* ── Tabs ──────────────────────────────────────────── */
 .tab-btn { transition:color .2s, border-color .2s; }
@@ -351,14 +355,14 @@ body    { background: var(--bg); color: var(--text); font-family: 'Inter', syste
 .marquee-wrapper::after  { right:0; background:linear-gradient(to left,  var(--surface-2), transparent); }
 .marquee-track {
   display:flex; gap:0; width:max-content;
-  animation:marquee 36s linear infinite;
+  animation:marquee 55s linear infinite;
 }
 .marquee-track:hover { animation-play-state:paused; }
 @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
 /* ── Float animation ───────────────────────────────── */
-@keyframes float { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-8px)} }
-.float { animation:float 6s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-6px)} }
+.float { animation:float 9s ease-in-out infinite; }
 
 /* ── Section gradient divider ──────────────────────── */
 .section-divider-line {

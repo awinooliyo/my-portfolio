@@ -30,7 +30,7 @@
 
         <!-- Availability pill -->
         <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border mb-8
-          {% if site_config and site_config.is_available %}badge-available{% else %}border-[rgba(79,142,247,0.20)] text-[#3d5578]{% endif %}">
+          {% if site_config and site_config.is_available %}badge-available{% else %}border-[rgba(37,99,235,0.18)] text-[#3d5578]{% endif %}">
           <span class="w-2 h-2 rounded-full {% if site_config and site_config.is_available %}bg-emerald-400 animate-pulse{% else %}bg-slate-500{% endif %}"></span>
           <span class="text-xs font-mono">{% if site_config %}{{ site_config.availability_note }}{% else %}Open to new opportunities{% endif %}</span>
         </div>
@@ -66,9 +66,12 @@
             Work With Me
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </a>
-          <a href="{% url 'projects' %}" class="btn-secondary">See My Projects</a>
-          <a href="{% url 'resume' %}" class="btn-secondary !border-[rgba(217,119,6,.35)] !text-[#d97706] hover:!bg-[rgba(217,119,6,.07)]">
-            View Resume ↗
+          <a href="{% url 'projects' %}" class="btn-secondary">
+            See My Projects
+          </a>
+          <a href="{% url 'resume' %}" class="btn-secondary !border-[rgba(37,99,235,.25)] !text-[#2563eb] hover:!bg-[rgba(37,99,235,.05)]">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+            Resume
           </a>
         </div>
 
@@ -105,12 +108,12 @@
             <p class="text-3xl font-black text-gradient counter" data-target="5">0</p>
             <p class="text-xs text-[#3d5578] mt-1 font-mono">Yrs exp</p>
           </div>
-          <div class="w-px bg-[rgba(79,142,247,0.15)]"></div>
+          <div class="w-px bg-[rgba(37,99,235,0.12)]"></div>
           <div>
             <p class="text-3xl font-black text-gradient counter" data-target="10">0</p>
             <p class="text-xs text-[#3d5578] mt-1 font-mono">Projects</p>
           </div>
-          <div class="w-px bg-[rgba(79,142,247,0.15)]"></div>
+          <div class="w-px bg-[rgba(37,99,235,0.12)]"></div>
           <div>
             <p class="text-3xl font-black text-gradient counter" data-target="6">0</p>
             <p class="text-xs text-[#3d5578] mt-1 font-mono">Languages</p>
@@ -176,71 +179,80 @@
       {% if forloop.first %}
       {# ── Featured card — 2-column wide ── #}
       <a href="{{ project.get_absolute_url }}"
-         class="card group md:col-span-2 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 reveal flex flex-col sm:flex-row">
+         class="card group md:col-span-2 overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 reveal">
+        <div class="flex flex-col sm:flex-row" style="min-height: 260px;">
 
-        {# Cover panel #}
-        <div class="relative sm:w-5/12 min-h-[180px] sm:min-h-0 flex-shrink-0 overflow-hidden"
-             style="background: linear-gradient(135deg, {{ cover_grad }});">
-          {% if project.image %}
-            <img src="{{ project.image.url }}" alt="{{ project.title }}"
-                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          {% else %}
-            <div class="absolute inset-0 flex items-end justify-start p-6">
-              <span class="font-black text-white/[0.15] leading-none select-none"
-                    style="font-size: clamp(5rem, 10vw, 8rem);">{{ project.title|first|upper }}</span>
+          {# Cover — fixed height on mobile, auto on desktop (stretches with content) #}
+          <div class="relative w-full h-52 sm:h-auto sm:w-[38%] flex-shrink-0 overflow-hidden"
+               style="background: linear-gradient(140deg, {{ cover_grad }});">
+            {% if project.image %}
+              <img src="{{ project.image.url }}" alt="{{ project.title }}"
+                   class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            {% else %}
+              {# Monogram — large, anchored bottom-right for visual balance #}
+              <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
+                <span class="font-black text-white/[0.12] leading-none select-none" style="font-size:min(30vw,9rem);">
+                  {{ project.title|first|upper }}
+                </span>
+              </div>
+              <div class="absolute inset-0 opacity-[0.06]"
+                   style="background-image:radial-gradient(circle,white 1px,transparent 1px);background-size:22px 22px;"></div>
+            {% endif %}
+            {# Badges over cover #}
+            <div class="absolute top-3 left-3 flex gap-1.5">
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/90 text-[#0d1b2e] shadow-sm">
+                Featured
+              </span>
+              <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-black/30 text-white backdrop-blur-sm font-mono">
+                {{ project.get_status_display }}
+              </span>
             </div>
-            <div class="absolute inset-0 opacity-[0.07]"
-                 style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 20px 20px;"></div>
-          {% endif %}
-          <div class="absolute top-4 left-4">
-            <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/90 text-[#0d1b2e] shadow-sm">
-              Featured
-            </span>
+            {% if project.live_url or project.github_url %}
+            <div class="absolute bottom-3 left-3 flex gap-1.5">
+              {% if project.github_url %}
+              <a href="{{ project.github_url }}" target="_blank" rel="noopener" onclick="event.stopPropagation()"
+                 class="inline-flex items-center gap-1 text-xs bg-white/90 hover:bg-white text-[#0d1b2e] px-2 py-0.5 rounded-full shadow-sm transition font-mono">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                GitHub
+              </a>
+              {% endif %}
+              {% if project.live_url %}
+              <a href="{{ project.live_url }}" target="_blank" rel="noopener" onclick="event.stopPropagation()"
+                 class="inline-flex items-center gap-1 text-xs bg-white/90 hover:bg-white text-[#0d1b2e] px-2 py-0.5 rounded-full shadow-sm transition font-mono">
+                <i data-lucide="external-link" class="w-3 h-3"></i> Live
+              </a>
+              {% endif %}
+            </div>
+            {% endif %}
           </div>
-        </div>
 
-        {# Content panel #}
-        <div class="flex-1 p-7 flex flex-col">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="text-xs px-2.5 py-1 rounded-full font-mono font-medium border
-              {% if project.status == 'completed' %}status-completed
-              {% elif project.status == 'in_progress' %}status-in_progress
-              {% else %}status-archived{% endif %}">
-              {{ project.get_status_display }}
-            </span>
+          {# Content #}
+          <div class="flex-1 p-7 flex flex-col justify-between gap-5">
+            <div>
+              <h3 class="text-2xl font-black text-[#0d1b2e] mb-2 group-hover:text-[#2563eb] transition-colors leading-tight">
+                {{ project.title }}
+              </h3>
+              <p class="text-[#3d5578] text-sm leading-relaxed">
+                {{ project.tagline }}
+              </p>
+            </div>
+            <div>
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                {% for tech in project.tech_stack|slice:":7" %}
+                <span class="chip chip-backend" style="font-size:0.73rem;">{{ tech }}</span>
+                {% endfor %}
+                {% if project.tech_stack|length > 7 %}
+                <span class="text-xs text-[#7a96bb] font-mono self-center">+{{ project.tech_stack|length|add:"-7" }}</span>
+                {% endif %}
+              </div>
+              <div class="flex items-center pt-4 border-t border-[rgba(37,99,235,0.08)]">
+                <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-[#2563eb] group-hover:gap-2.5 transition-all">
+                  View case study <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </span>
+              </div>
+            </div>
           </div>
-          <h3 class="text-xl font-black text-[#0d1b2e] mb-2 group-hover:text-[#2563eb] transition-colors leading-tight">
-            {{ project.title }}
-          </h3>
-          <p class="text-[#3d5578] text-sm leading-relaxed mb-5 flex-1">
-            {{ project.tagline }}
-          </p>
-          <div class="flex flex-wrap gap-1.5 mb-5">
-            {% for tech in project.tech_stack|slice:":6" %}
-            <span class="chip chip-backend" style="font-size:0.73rem;">{{ tech }}</span>
-            {% endfor %}
-            {% if project.tech_stack|length > 6 %}
-            <span class="text-xs text-[#7a96bb] font-mono self-center">+{{ project.tech_stack|length|add:"-6" }}</span>
-            {% endif %}
-          </div>
-          <div class="flex items-center gap-3 pt-4 border-t border-[rgba(37,99,235,0.08)]">
-            <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-[#2563eb]">
-              View case study <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-            </span>
-            {% if project.github_url %}
-            <a href="{{ project.github_url }}" target="_blank" rel="noopener" onclick="event.stopPropagation()"
-               class="inline-flex items-center gap-1.5 text-xs text-[#7a96bb] hover:text-[#0d1b2e] transition font-mono border border-[rgba(37,99,235,0.15)] px-2.5 py-1 rounded-lg hover:border-[rgba(37,99,235,0.30)]">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-              GitHub
-            </a>
-            {% endif %}
-            {% if project.live_url %}
-            <a href="{{ project.live_url }}" target="_blank" rel="noopener" onclick="event.stopPropagation()"
-               class="inline-flex items-center gap-1.5 text-xs text-[#7a96bb] hover:text-[#0d1b2e] transition font-mono border border-[rgba(37,99,235,0.15)] px-2.5 py-1 rounded-lg hover:border-[rgba(37,99,235,0.30)]">
-              <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Live
-            </a>
-            {% endif %}
-          </div>
+
         </div>
       </a>
 
@@ -449,7 +461,7 @@
 
     <!-- Experience timeline -->
     {% if experiences %}
-    <div class="mt-16 pt-14 border-t border-[rgba(79,142,247,0.08)] reveal">
+    <div class="mt-16 pt-14 border-t border-[rgba(37,99,235,0.08)] reveal">
       <h3 class="text-xl font-bold text-[#0d1b2e] mb-8">Experience</h3>
       <div class="space-y-0">
         {% for exp in experiences %}
@@ -495,7 +507,7 @@
       <a href="{{ post.get_absolute_url }}"
          class="card card-glow-teal group flex flex-col p-6 reveal reveal-delay-{{ forloop.counter }}">
         <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5
-                    bg-[rgba(34,211,238,.10)] border border-[rgba(34,211,238,.20)]">
+                    bg-[rgba(8,145,178,.08)] border border-[rgba(8,145,178,.20)]">
           <i data-lucide="file-text" class="w-5 h-5 text-[#0891b2]"></i>
         </div>
         <div class="text-xs font-mono text-[#7a96bb] mb-2">{{ post.published_at|date:"M d, Y" }}</div>
@@ -512,7 +524,7 @@
       <a href="https://dev.to/awinooliyo" target="_blank" rel="noopener"
          class="card card-glow-teal group flex items-start gap-5 p-6">
         <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0
-                    bg-[rgba(34,211,238,.10)] border border-[rgba(34,211,238,.20)]">
+                    bg-[rgba(8,145,178,.08)] border border-[rgba(8,145,178,.20)]">
           <span class="font-mono text-xs font-bold text-[#0891b2]">DEV</span>
         </div>
         <div>
@@ -653,25 +665,30 @@
 
 
 <!-- ════════════════════════════════════════════════
-  CTA BANNER — explosive close
+  CTA — Full-bleed dark section, maximum contrast
 ════════════════════════════════════════════════ -->
-<section class="py-28 bg-[#f7f9ff]">
-  <div class="max-w-6xl mx-auto px-6 lg:px-8">
-    <div class="cta-banner p-12 md:p-20 text-center" style="
-      background: linear-gradient(135deg, #0d1d2e 0%, #112338 100%);
-      border-color: rgba(79,142,247,0.25);">
-      <span class="label label-red mx-auto mb-6">Let's Build Together</span>
-      <h2 class="text-4xl md:text-6xl font-black text-[#0d1b2e] mb-4 leading-tight">
-        Ready to ship something<br><span class="text-gradient">great?</span>
-      </h2>
-      <p class="text-[#3d5578] text-lg max-w-xl mx-auto mb-10">
-        Whether it's a new product, a complex backend system, or a team that needs a senior engineer —
-        I'm here to help you build it right, on time.
-      </p>
-      <div class="flex flex-wrap gap-4 justify-center">
-        <a href="{% url 'work_with_me' %}" class="btn-red text-base">Work With Me →</a>
-        <a href="{% url 'process' %}"      class="btn-secondary text-base">See My Process</a>
-      </div>
+<section style="background: #0d1b2e;">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8 py-24 md:py-32 text-center">
+    <span class="label label-red mx-auto mb-6 inline-flex">Let's Build Together</span>
+    <h2 class="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-5 leading-[1.0] tracking-tight">
+      Ready to ship something<br>
+      <span class="text-gradient">truly great?</span>
+    </h2>
+    <p class="text-[#7b95bc] text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
+      Whether it's a new product, a complex backend system, or a team that needs
+      a sharp engineer who can hit the ground running — I'm here to help you
+      build it right, on time, at any level.
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a href="{% url 'work_with_me' %}" class="btn-red !py-4 !px-8 text-base">
+        Work With Me
+        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+      </a>
+      <a href="{% url 'process' %}"
+         class="inline-flex items-center gap-2 text-base font-semibold px-8 py-4 rounded-lg
+                border-2 border-white/20 text-white hover:border-white/40 hover:bg-white/5 transition-all min-h-[52px]">
+        See My Process
+      </a>
     </div>
   </div>
 </section>
@@ -688,12 +705,15 @@
       const el = entry.target;
       const target = parseInt(el.dataset.target, 10);
       let current = 0;
-      const step = Math.ceil(target / 40);
+      const duration = 1400;
+      const steps = 60;
+      const interval = duration / steps;
+      const increment = target / steps;
       const timer = setInterval(() => {
-        current = Math.min(current + step, target);
-        el.textContent = current + '+';
+        current = Math.min(current + increment, target);
+        el.textContent = Math.round(current) + '+';
         if (current >= target) clearInterval(timer);
-      }, 35);
+      }, interval);
       counterObserver.unobserve(el);
     });
   }, { threshold: 0.5 });

@@ -27,17 +27,17 @@
     <div class="flex flex-wrap gap-1 mb-10 border-b border-[rgba(37,99,235,0.10)] pb-0">
       <a href="{% url 'library' %}"
          class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
-                {% if not active_type %}border-[#a78bfa] text-[#7c3aed]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+                {% if not active_type %}border-[#7c3aed] text-[#7c3aed]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
         All
       </a>
       <a href="?type=book"
          class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
-                {% if active_type == 'book' %}border-[#f6b847] text-[#d97706]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+                {% if active_type == 'book' %}border-[#d97706] text-[#d97706]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
         Books
       </a>
       <a href="?type=course"
          class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
-                {% if active_type == 'course' %}border-[#4f8ef7] text-[#2563eb]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+                {% if active_type == 'course' %}border-[#2563eb] text-[#2563eb]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
         Courses
       </a>
       <a href="?type=tutorial"
@@ -47,12 +47,12 @@
       </a>
       <a href="?type=article"
          class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
-                {% if active_type == 'article' %}border-[#22d3a0] text-[#059669]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+                {% if active_type == 'article' %}border-[#059669] text-[#059669]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
         Articles
       </a>
       <a href="?type=video"
          class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
-                {% if active_type == 'video' %}border-[#22d3ee] text-[#0891b2]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+                {% if active_type == 'video' %}border-[#0891b2] text-[#0891b2]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
         Videos
       </a>
     </div>
