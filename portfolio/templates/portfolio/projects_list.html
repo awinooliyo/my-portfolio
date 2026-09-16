@@ -1,0 +1,107 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Projects — Erick Awino{% endblock %}
+{% block meta_description %}Production-grade web systems, ERP platforms, APIs, and CLI tools built by Erick Awino.{% endblock %}
+
+{% block content %}
+
+<div class="page-hero">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+    <a href="{% url 'home' %}" class="inline-flex items-center gap-2 text-sm text-[#7a96bb] hover:text-[#2563eb] transition mb-8 font-mono group">
+      <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"></i>
+      Home
+    </a>
+    <span class="label label-amber">Work</span>
+    <h1 class="text-5xl md:text-6xl font-black text-[#0d1b2e] mb-4 leading-tight">All Projects</h1>
+    <p class="text-[#3d5578] text-lg max-w-2xl">
+      Production CMS platforms, ERP systems, REST APIs, CLI tools, and systems programming — shipped end-to-end.
+    </p>
+  </div>
+</div>
+
+<div class="py-16 bg-[#f7f9ff] min-h-screen">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+
+    <!-- Filter tabs -->
+    <div class="flex gap-1 mb-10 border-b border-[rgba(37,99,235,0.10)] pb-0">
+      <a href="{% url 'projects' %}"
+         class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
+                {% if not active_status %}active border-[#f6b847] text-[#d97706]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+        All
+      </a>
+      <a href="?status=in_progress"
+         class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
+                {% if active_status == 'in_progress' %}active border-[#4f8ef7] text-[#2563eb]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+        In Progress
+      </a>
+      <a href="?status=completed"
+         class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
+                {% if active_status == 'completed' %}active border-[#22d3a0] text-[#059669]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+        Completed
+      </a>
+      <a href="?status=archived"
+         class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
+                {% if active_status == 'archived' %}active border-[#94a3b8] text-[#94a3b8]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+        Archived
+      </a>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {% for project in projects %}
+      <a href="{{ project.get_absolute_url }}" class="card group flex flex-col p-6 reveal reveal-delay-{{ forloop.counter }}">
+        <div class="flex items-start justify-between mb-5">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center
+                      bg-[rgba(246,184,71,.10)] border border-[rgba(246,184,71,.20)]">
+            <svg class="w-5 h-5 text-[#d97706]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+            </svg>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs px-2 py-0.5 rounded font-mono border
+              {% if project.status == 'completed' %}status-completed
+              {% elif project.status == 'in_progress' %}status-in_progress
+              {% else %}status-archived{% endif %}">
+              {{ project.get_status_display }}
+            </span>
+            {% if project.github_url %}
+            <a href="{{ project.github_url }}" target="_blank" rel="noopener"
+               onclick="event.stopPropagation()" class="text-[#7a96bb] hover:text-[#0d1b2e] transition">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            {% endif %}
+            {% if project.live_url %}
+            <a href="{{ project.live_url }}" target="_blank" rel="noopener"
+               onclick="event.stopPropagation()" class="text-[#7a96bb] hover:text-[#0d1b2e] transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+        <h3 class="text-base font-bold text-[#0d1b2e] mb-2 group-hover:text-[#d97706] transition-colors line-clamp-2">
+          {{ project.title }}
+        </h3>
+        <p class="text-[#3d5578] text-sm mb-5 leading-relaxed flex-1 line-clamp-3">
+          {{ project.tagline }}
+        </p>
+        <div class="flex flex-wrap gap-1.5 mt-auto">
+          {% for tech in project.tech_stack %}
+          <span class="chip chip-backend text-xs">{{ tech }}</span>
+          {% endfor %}
+        </div>
+      </a>
+      {% empty %}
+      <div class="col-span-3 py-24 text-center">
+        <p class="text-[#3d5578] font-mono text-sm">// no projects matching this filter</p>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

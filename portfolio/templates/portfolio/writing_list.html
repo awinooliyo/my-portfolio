@@ -1,0 +1,104 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Writing — Erick Awino{% endblock %}
+{% block meta_description %}Articles, guides, and thought pieces on software engineering, Python, Django, system design, and the craft of building software.{% endblock %}
+
+{% block content %}
+
+<div class="page-hero">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+    <a href="{% url 'home' %}" class="inline-flex items-center gap-2 text-sm text-[#7a96bb] hover:text-[#0891b2] transition mb-8 font-mono group">
+      <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"></i>
+      Home
+    </a>
+    <span class="label label-teal">Writing</span>
+    <h1 class="text-5xl md:text-6xl font-black text-[#0d1b2e] mb-4 leading-tight">Articles & Guides</h1>
+    <p class="text-[#3d5578] text-lg max-w-2xl">
+      Engineering deep-dives, architecture decisions, career reflections, and the craft of building software that lasts.
+    </p>
+  </div>
+</div>
+
+<div class="py-16 bg-[#f7f9ff] min-h-screen">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+
+    {% if posts %}
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for post in posts %}
+      <a href="{{ post.get_absolute_url }}" class="card group flex flex-col p-6 reveal reveal-delay-{{ forloop.counter }}">
+        {% if post.cover_image %}
+        <div class="mb-5 rounded-lg overflow-hidden h-40 bg-[#eef3fc]">
+          <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
+        </div>
+        {% else %}
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5
+                    bg-[rgba(34,211,238,.10)] border border-[rgba(34,211,238,.20)]">
+          <svg class="w-5 h-5 text-[#0891b2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        {% endif %}
+
+        <div class="text-xs font-mono text-[#7a96bb] mb-2">
+          {{ post.published_at|date:"M d, Y" }}
+        </div>
+        <h2 class="text-base font-bold text-[#0d1b2e] mb-2 group-hover:text-[#0891b2] transition-colors line-clamp-2 leading-snug">
+          {{ post.title }}
+        </h2>
+        <p class="text-[#3d5578] text-sm leading-relaxed flex-1 line-clamp-3">
+          {{ post.excerpt }}
+        </p>
+        <span class="mt-4 text-xs font-mono text-[#0891b2] group-hover:underline">Read more →</span>
+      </a>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <!-- External writing links when no local posts yet -->
+    <div class="mb-12">
+      <p class="text-[#3d5578] text-sm mb-8 font-mono">// local articles coming soon — find my writing here:</p>
+      <div class="grid md:grid-cols-2 gap-5">
+        <a href="https://dev.to/awinooliyo" target="_blank" rel="noopener"
+           class="card group flex items-start gap-5 p-6">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0
+                      bg-[rgba(34,211,238,.10)] border border-[rgba(34,211,238,.20)]">
+            <span class="font-mono text-sm font-black text-[#0891b2]">DEV</span>
+          </div>
+          <div>
+            <h3 class="text-[#0d1b2e] font-bold text-lg mb-1 group-hover:text-[#0891b2] transition">Articles on Dev.to</h3>
+            <p class="text-[#3d5578] text-sm mb-3">Engineering tutorials, open source guides, and dev notes.</p>
+            <span class="text-xs font-mono text-[#0891b2]">dev.to/awinooliyo →</span>
+          </div>
+        </a>
+        <a href="https://medium.com/@erick.otieno89" target="_blank" rel="noopener"
+           class="card group flex items-start gap-5 p-6">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0
+                      bg-[rgba(246,184,71,.10)] border border-[rgba(246,184,71,.20)]">
+            <span class="font-mono text-sm font-black text-[#d97706]">M</span>
+          </div>
+          <div>
+            <h3 class="text-[#0d1b2e] font-bold text-lg mb-1 group-hover:text-[#d97706] transition">Stories on Medium</h3>
+            <p class="text-[#3d5578] text-sm mb-3">Long-form essays on software engineering, career, and learning.</p>
+            <span class="text-xs font-mono text-[#d97706]">medium.com/@erick.otieno89 →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Topics I write about -->
+    <div class="mt-16 pt-12 border-t border-[rgba(37,99,235,0.08)]">
+      <h2 class="text-xl font-bold text-[#0d1b2e] mb-6">Topics I write about</h2>
+      <div class="flex flex-wrap gap-2">
+        {% for topic in "Python,Django,System Design,REST APIs,Docker,PostgreSQL,React,Vue.js,Software Architecture,Career in Tech,Backend Engineering,Full-Stack Development,Open Source,Code Quality,Testing" %}
+        <span class="chip chip-backend text-sm">{{ topic }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

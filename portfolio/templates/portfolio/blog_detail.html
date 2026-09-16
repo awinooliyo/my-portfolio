@@ -7,9 +7,7 @@
 <div class="pt-24 pb-16 min-h-screen">
   <div class="max-w-3xl mx-auto px-6 lg:px-8">
     <a href="{% url 'blog_list' %}" class="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-blue-400 transition mb-10 font-mono group">
-      <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-      </svg>
+      <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"></i>
       All articles
     </a>
     <p class="font-mono text-blue-400/70 text-xs mb-4">{{ post.published_at|date:"F d, Y" }}</p>

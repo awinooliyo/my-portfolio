@@ -1,39 +1,40 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.utils import timezone
 import datetime
 
-from .models import Project, SkillCategory, WorkExperience, ContactMessage, Appointment, BlogPost, Resource, SiteConfig, ProfilePhoto
+from .models import Project, SkillCategory, ContactMessage, Appointment, BlogPost, Resource, SiteConfig, ProfilePhoto
 
 
 def home(request):
+    from .models import WorkExperience
     projects = Project.objects.filter(featured=True).order_by("order")
     skill_categories = SkillCategory.objects.prefetch_related("skills").all()
     experiences = WorkExperience.objects.all()
-    blog_posts        = BlogPost.objects.filter(is_published=True)[:3]
-    profile_photos    = list(ProfilePhoto.objects.filter(is_active=True))
-    featured_resources = Resource.objects.filter(is_featured=True)[:4]
-
-    booked_slots = set(
-        Appointment.objects.filter(
-            date__gte=datetime.date.today(),
-            status__in=["pending", "confirmed"],
-        ).values_list("date", "time_slot")
-    )
+    blog_posts = BlogPost.objects.filter(is_published=True)[:3]
+    profile_photos = list(ProfilePhoto.objects.filter(is_active=True))
+    featured_resources = Resource.objects.filter(is_featured=True)[:3]
 
     context = {
         "projects": projects,
         "skill_categories": skill_categories,
         "experiences": experiences,
         "blog_posts": blog_posts,
-        "booked_slots": booked_slots,
-        "time_slots": Appointment.TimeSlot.choices,
-        "purposes": Appointment.Purpose.choices,
-        "today": datetime.date.today().isoformat(),
         "featured_resources": featured_resources,
         "profile_photos": profile_photos,
+        "hobbies": HOBBIES,
     }
     return render(request, "portfolio/home.html", context)
+
+
+def projects_list(request):
+    status = request.GET.get("status", "")
+    projects = Project.objects.all()
+    if status in ("completed", "in_progress", "archived"):
+        projects = projects.filter(status=status)
+    return render(request, "portfolio/projects_list.html", {
+        "projects": projects,
+        "active_status": status,
+    })
 
 
 def project_detail(request, slug):
@@ -45,34 +46,69 @@ def project_detail(request, slug):
     })
 
 
-def blog_list(request):
-    tab = request.GET.get("tab", "articles")
-    posts     = BlogPost.objects.filter(is_published=True)
+def writing_list(request):
+    posts = BlogPost.objects.filter(is_published=True)
+    return render(request, "portfolio/writing_list.html", {"posts": posts})
+
+
+def writing_detail(request, slug):
+    post = get_object_or_404(BlogPost, slug=slug, is_published=True)
+    return render(request, "portfolio/writing_detail.html", {"post": post})
+
+
+def library(request):
+    resource_type = request.GET.get("type", "")
     resources = Resource.objects.all()
-
-    if tab == "books":
-        resources = resources.filter(resource_type="book")
-    elif tab == "tutorials":
-        resources = resources.filter(resource_type__in=["tutorial", "video", "course"])
-    elif tab == "articles":
-        resources = resources.filter(resource_type="article")
-
-    tabs = [
-        ("Articles", "articles"),
-        ("Books", "books"),
-        ("Tutorials & Courses", "tutorials"),
-    ]
-    return render(request, "portfolio/blog_list.html", {
-        "posts": posts,
+    if resource_type in ("book", "tutorial", "article", "course", "video"):
+        resources = resources.filter(resource_type=resource_type)
+    return render(request, "portfolio/library.html", {
         "resources": resources,
-        "active_tab": tab,
-        "tabs": tabs,
+        "active_type": resource_type,
     })
 
 
-def blog_detail(request, slug):
-    post = get_object_or_404(BlogPost, slug=slug, is_published=True)
-    return render(request, "portfolio/blog_detail.html", {"post": post})
+def process(request):
+    booked_slots = set(
+        Appointment.objects.filter(
+            date__gte=datetime.date.today(),
+            status__in=["pending", "confirmed"],
+        ).values_list("date", "time_slot")
+    )
+    context = {
+        "booked_slots": booked_slots,
+        "time_slots": Appointment.TimeSlot.choices,
+        "purposes": Appointment.Purpose.choices,
+        "today": datetime.date.today().isoformat(),
+    }
+    return render(request, "portfolio/process.html", context)
+
+
+HOBBIES = [
+    ("🚴", "Cycling", "Long rides clear my head and build discipline — same muscles as shipping software."),
+    ("📚", "Reading", "From system design papers to fiction. Always a book open somewhere."),
+    ("🔬", "Researching", "Deep-diving into topics that interest me. Curiosity is my default mode."),
+    ("✍️", "Writing", "I write to clarify thinking. Articles, notes, documentation."),
+    ("🏊", "Swimming", "Meditative, full-body. Good counterweight to sitting at a desk."),
+    ("🥾", "Hiking", "Nairobi's hills and beyond. Nature resets perspective."),
+    ("🌿", "Exploring Nature", "Forests, parks, national reserves. Being outdoors keeps me grounded."),
+    ("✈️", "Travelling", "New places, new ways people solve problems. Invaluable for a builder."),
+]
+
+
+VALUE_PROPS = [
+    ("layers", "Architecture that lasts", "I design systems for the long term: clear data models, documented decisions, and code your future team can maintain."),
+    ("zap", "Shipping velocity", "I work iteratively with weekly demos. You see real, working software — not slide decks. No surprises at the end."),
+    ("shield-check", "Production-grade quality", "Tests, CI/CD, Docker, monitoring. I treat every project like it has thousands of users — because yours might."),
+    ("message-square", "Clear communication", "Weekly written updates, async-first, honest estimates. I flag problems early, not at the deadline."),
+    ("code-2", "Backend depth, full-stack range", "Deep Python/Django expertise with a fluent frontend range across React, Vue, TypeScript, and Java."),
+    ("users", "Collaborative by default", "I work with your team, not around it. Code reviews, documentation, knowledge transfer — part of every engagement."),
+]
+
+
+def work_with_me(request):
+    return render(request, "portfolio/work_with_me.html", {
+        "value_props": VALUE_PROPS,
+    })
 
 
 def contact(request):
@@ -84,11 +120,11 @@ def contact(request):
 
         if name and email and subject and body:
             ContactMessage.objects.create(name=name, email=email, subject=subject, message=body)
-            messages.success(request, "Message sent! I'll get back to you soon.")
+            messages.success(request, "Message sent! I'll get back to you within 24 hours.")
         else:
             messages.error(request, "Please fill in all fields.")
 
-    return redirect("home")
+    return redirect("work_with_me")
 
 
 def resume(request):
@@ -114,16 +150,16 @@ def book_appointment(request):
                 raise ValueError("Past date")
         except (ValueError, TypeError):
             messages.error(request, "Please choose a valid future date.")
-            return redirect("home")
+            return redirect("process")
 
         if not all([name, email, time_slot]):
             messages.error(request, "Please fill in all required fields.")
-            return redirect("home")
+            return redirect("process")
 
         if Appointment.objects.filter(date=date, time_slot=time_slot,
                                       status__in=["pending", "confirmed"]).exists():
             messages.error(request, "That slot is already taken — please pick another time.")
-            return redirect("home")
+            return redirect("process")
 
         Appointment.objects.create(
             name=name, email=email, date=date,
@@ -134,4 +170,4 @@ def book_appointment(request):
                          f"{dict(Appointment.TimeSlot.choices)[time_slot]}. "
                          "I'll confirm by email.")
 
-    return redirect("home")
+    return redirect("process")

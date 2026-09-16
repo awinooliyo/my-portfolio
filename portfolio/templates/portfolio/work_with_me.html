@@ -1,0 +1,267 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Work With Me — Erick Awino{% endblock %}
+{% block meta_description %}Engagement models, terms, and how to start a project with Erick Awino. Fixed-price, retainer, and staff augmentation options.{% endblock %}
+
+{% block content %}
+
+<div class="page-hero">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+    <a href="{% url 'home' %}" class="inline-flex items-center gap-2 text-sm text-[#7a96bb] hover:text-[#dc2626] transition mb-8 font-mono group">
+      <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"></i>
+      Home
+    </a>
+    <span class="label label-red">Let's Build</span>
+    <h1 class="text-5xl md:text-6xl font-black text-[#0d1b2e] mb-4 leading-tight">Work With Me</h1>
+    <p class="text-[#3d5578] text-lg max-w-2xl">
+      I take on a small number of clients at a time so I can give each project genuine attention. Here's how to work together.
+    </p>
+  </div>
+</div>
+
+<div class="py-20 bg-[#f7f9ff]">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+
+    <!-- What I bring -->
+    <div class="mb-20 reveal">
+      <span class="label label-blue">What You Get</span>
+      <h2 class="text-3xl md:text-4xl font-black text-[#0d1b2e] mb-10">Solid engineering, not just code.</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {% for icon, title, desc in value_props %}
+        <div class="card p-6 group hover:border-[rgba(37,99,235,0.28)]">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4
+                      bg-[rgba(37,99,235,0.08)] border border-[rgba(37,99,235,0.15)]
+                      group-hover:bg-[rgba(37,99,235,0.14)] transition">
+            <i data-lucide="{{ icon }}" class="w-5 h-5 text-[#2563eb]"></i>
+          </div>
+          <h3 class="text-[#0d1b2e] font-bold mb-2">{{ title }}</h3>
+          <p class="text-[#3d5578] text-sm leading-relaxed">{{ desc }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Engagement models -->
+    <div class="mb-20 reveal">
+      <span class="label label-amber">Engagement Models</span>
+      <h2 class="text-3xl md:text-4xl font-black text-[#0d1b2e] mb-4">How we can work together.</h2>
+      <p class="text-[#3d5578] mb-10 max-w-xl">Choose the model that fits your situation. Not sure? <a href="#contact" class="text-[#dc2626] hover:underline">Send me a message</a> and we'll figure it out.</p>
+
+      <div class="grid md:grid-cols-3 gap-5">
+
+        <div class="engagement-card p-7">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5
+                      bg-[rgba(34,211,160,.10)] border border-[rgba(34,211,160,.20)]">
+            <svg class="w-5 h-5 text-[#059669]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+            </svg>
+          </div>
+          <h3 class="text-[#0d1b2e] font-black text-xl mb-2">Fixed-Price Project</h3>
+          <p class="text-[#059669] text-sm font-mono mb-4">Defined scope, defined budget</p>
+          <p class="text-[#3d5578] text-sm leading-relaxed mb-5">
+            Best for well-defined products. We agree on scope, deliverables, and price upfront. I build to spec, you get predictability.
+          </p>
+          <ul class="space-y-2 text-sm text-[#3d5578]">
+            <li class="flex gap-2"><span class="text-[#059669]">✓</span> Fixed budget</li>
+            <li class="flex gap-2"><span class="text-[#059669]">✓</span> Defined milestones</li>
+            <li class="flex gap-2"><span class="text-[#059669]">✓</span> Change control process</li>
+          </ul>
+        </div>
+
+        <div class="engagement-card featured p-7">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5
+                      bg-[rgba(37,99,235,.15)] border border-[rgba(37,99,235,.30)]">
+            <svg class="w-5 h-5 text-[#2563eb]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-[#0d1b2e] font-black text-xl">Monthly Retainer</h3>
+            <span class="text-xs font-mono px-2 py-1 rounded bg-[rgba(37,99,235,.12)] text-[#2563eb] border border-[rgba(37,99,235,.22)]">Popular</span>
+          </div>
+          <p class="text-[#2563eb] text-sm font-mono mb-4">Ongoing product work</p>
+          <p class="text-[#3d5578] text-sm leading-relaxed mb-5">
+            Best for teams that need consistent engineering bandwidth. I'm your remote senior engineer — shipping features, reviewing PRs, and solving problems.
+          </p>
+          <ul class="space-y-2 text-sm text-[#3d5578]">
+            <li class="flex gap-2"><span class="text-[#2563eb]">✓</span> Guaranteed hours per month</li>
+            <li class="flex gap-2"><span class="text-[#2563eb]">✓</span> Weekly check-ins</li>
+            <li class="flex gap-2"><span class="text-[#2563eb]">✓</span> Slack/async access</li>
+            <li class="flex gap-2"><span class="text-[#2563eb]">✓</span> Priority response time</li>
+          </ul>
+        </div>
+
+        <div class="engagement-card p-7">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-5
+                      bg-[rgba(167,139,250,.10)] border border-[rgba(167,139,250,.20)]">
+            <svg class="w-5 h-5 text-[#7c3aed]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-[#0d1b2e] font-black text-xl mb-2">Staff Augmentation</h3>
+          <p class="text-[#7c3aed] text-sm font-mono mb-4">Embed in your team</p>
+          <p class="text-[#3d5578] text-sm leading-relaxed mb-5">
+            I join your existing team as a senior engineer. I attend standups, work in your repo, and ship alongside your people. Full-time or part-time.
+          </p>
+          <ul class="space-y-2 text-sm text-[#3d5578]">
+            <li class="flex gap-2"><span class="text-[#7c3aed]">✓</span> Work in your stack</li>
+            <li class="flex gap-2"><span class="text-[#7c3aed]">✓</span> Follow your process</li>
+            <li class="flex gap-2"><span class="text-[#7c3aed]">✓</span> Flexible duration</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Terms of engagement -->
+    <div class="mb-20 reveal">
+      <span class="label label-brown">Terms</span>
+      <h2 class="text-3xl md:text-4xl font-black text-[#0d1b2e] mb-10">Terms of Engagement</h2>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="card p-6 space-y-4">
+          <h3 class="text-[#0d1b2e] font-bold text-lg">Payment</h3>
+          <div class="space-y-3 text-[#3d5578] text-sm leading-relaxed">
+            <p>Fixed-price projects: <span class="text-[#0d1b2e]">50% upfront, 50% on delivery.</span> For larger projects, milestone-based payments.</p>
+            <p>Retainers: <span class="text-[#0d1b2e]">Invoiced monthly in advance.</span> First month is pro-rated.</p>
+            <p>Accepted: M-Pesa, bank transfer (KES/USD), Payoneer, Wise.</p>
+          </div>
+        </div>
+
+        <div class="card p-6 space-y-4">
+          <h3 class="text-[#0d1b2e] font-bold text-lg">Intellectual Property</h3>
+          <div class="space-y-3 text-[#3d5578] text-sm leading-relaxed">
+            <p>All custom code I write for you <span class="text-[#0d1b2e]">becomes your property upon final payment.</span></p>
+            <p>I may use the project in my portfolio (screenshots, description) unless you request otherwise in writing.</p>
+            <p>I retain the right to reuse generic utilities and patterns I build as part of my standard toolkit.</p>
+          </div>
+        </div>
+
+        <div class="card p-6 space-y-4">
+          <h3 class="text-[#0d1b2e] font-bold text-lg">Confidentiality</h3>
+          <div class="space-y-3 text-[#3d5578] text-sm leading-relaxed">
+            <p>I treat all client information as confidential by default. I will sign an NDA if required.</p>
+            <p>I do not share client code, business logic, or proprietary data with third parties.</p>
+          </div>
+        </div>
+
+        <div class="card p-6 space-y-4">
+          <h3 class="text-[#0d1b2e] font-bold text-lg">Scope Changes</h3>
+          <div class="space-y-3 text-[#3d5578] text-sm leading-relaxed">
+            <p>For fixed-price projects, any change outside the agreed scope is documented in a <span class="text-[#0d1b2e]">Change Order</span> with additional cost and timeline impact.</p>
+            <p>Small clarifications (under 2 hours of work) are absorbed without formal change orders.</p>
+          </div>
+        </div>
+
+        <div class="card p-6 space-y-4">
+          <h3 class="text-[#0d1b2e] font-bold text-lg">Communication</h3>
+          <div class="space-y-3 text-[#3d5578] text-sm leading-relaxed">
+            <p>I'm async-first. I respond to messages within <span class="text-[#0d1b2e]">4 business hours</span> (EAT timezone).</p>
+            <p>Weekly written status updates for all active engagements. Video calls by appointment.</p>
+          </div>
+        </div>
+
+        <div class="card p-6 space-y-4">
+          <h3 class="text-[#0d1b2e] font-bold text-lg">Termination</h3>
+          <div class="space-y-3 text-[#3d5578] text-sm leading-relaxed">
+            <p>Either party may terminate with <span class="text-[#0d1b2e]">2 weeks' written notice.</span></p>
+            <p>Upon termination, I deliver all completed work. Work-in-progress is billed at the agreed rate for hours completed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact form -->
+    <div id="contact" class="reveal">
+      <span class="label label-red">Start a Conversation</span>
+      <h2 class="text-3xl md:text-4xl font-black text-[#0d1b2e] mb-4">Ready to work together?</h2>
+      <p class="text-[#3d5578] mb-10 max-w-xl">
+        Tell me about your project. I'll review it and respond within 24 hours with honest thoughts on fit, timeline, and next steps.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-12">
+        <form method="post" action="{% url 'contact' %}" class="space-y-4">
+          {% csrf_token %}
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-mono text-[#3d5578] mb-2 uppercase tracking-wider">Name *</label>
+              <input type="text" name="name" required class="form-input" placeholder="Your name">
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-[#3d5578] mb-2 uppercase tracking-wider">Email *</label>
+              <input type="email" name="email" required class="form-input" placeholder="you@company.com">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-[#3d5578] mb-2 uppercase tracking-wider">Subject *</label>
+            <input type="text" name="subject" required class="form-input" placeholder="e.g. Django API project for fintech startup">
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-[#3d5578] mb-2 uppercase tracking-wider">Tell me about your project *</label>
+            <textarea name="message" rows="6" required class="form-input resize-none"
+                      placeholder="What are you building? What's the timeline? What does success look like? The more context, the better."></textarea>
+          </div>
+          <button type="submit" class="btn-red w-full sm:w-auto">
+            Send Message →
+          </button>
+        </form>
+
+        <div class="space-y-6">
+          <div class="card p-6">
+            <h3 class="text-[#0d1b2e] font-bold mb-4">What happens next</h3>
+            <ol class="space-y-3 text-[#3d5578] text-sm">
+              <li class="flex gap-3">
+                <span class="w-6 h-6 rounded-full bg-[rgba(248,113,113,.10)] border border-[rgba(248,113,113,.20)] flex items-center justify-center text-[#dc2626] text-xs font-bold flex-shrink-0">1</span>
+                I read your message and do a quick feasibility check
+              </li>
+              <li class="flex gap-3">
+                <span class="w-6 h-6 rounded-full bg-[rgba(248,113,113,.10)] border border-[rgba(248,113,113,.20)] flex items-center justify-center text-[#dc2626] text-xs font-bold flex-shrink-0">2</span>
+                You receive an honest response within 24h
+              </li>
+              <li class="flex gap-3">
+                <span class="w-6 h-6 rounded-full bg-[rgba(248,113,113,.10)] border border-[rgba(248,113,113,.20)] flex items-center justify-center text-[#dc2626] text-xs font-bold flex-shrink-0">3</span>
+                If it's a fit: discovery call → brief → proposal
+              </li>
+              <li class="flex gap-3">
+                <span class="w-6 h-6 rounded-full bg-[rgba(248,113,113,.10)] border border-[rgba(248,113,113,.20)] flex items-center justify-center text-[#dc2626] text-xs font-bold flex-shrink-0">4</span>
+                Signed agreement → kick-off → we build
+              </li>
+            </ol>
+          </div>
+
+          <div class="card p-6">
+            <h3 class="text-[#0d1b2e] font-bold mb-3">Prefer a call?</h3>
+            <p class="text-[#3d5578] text-sm mb-4">Skip the form and book a 30-minute discovery call directly.</p>
+            <a href="{% url 'process' %}#book" class="btn-secondary !py-2.5 !px-5 !min-h-0 text-sm">
+              Book a Call →
+            </a>
+          </div>
+
+          <div class="card p-6">
+            <h3 class="text-[#0d1b2e] font-bold mb-3">Direct contact</h3>
+            <div class="space-y-2">
+              <p class="text-[#3d5578] text-sm flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#7a96bb]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Nairobi, Kenya (EAT — UTC+3)
+              </p>
+              <a href="https://ke.linkedin.com/in/erick-awino-7803abbb" target="_blank" rel="noopener"
+                 class="text-[#3d5578] text-sm flex items-center gap-2 hover:text-[#60b8e0] transition">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                LinkedIn
+              </a>
+              <a href="https://github.com/awinooliyo" target="_blank" rel="noopener"
+                 class="text-[#3d5578] text-sm flex items-center gap-2 hover:text-[#0d1b2e] transition">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

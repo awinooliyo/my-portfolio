@@ -1,0 +1,53 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} — Erick Awino{% endblock %}
+{% block meta_description %}{{ post.excerpt }}{% endblock %}
+
+{% block content %}
+<div class="pt-24 pb-20 min-h-screen">
+  <div class="max-w-3xl mx-auto px-6 lg:px-8">
+
+    <a href="{% url 'writing' %}"
+       class="inline-flex items-center gap-2 text-sm text-[#7a96bb] hover:text-[#0891b2] transition mb-10 font-mono group">
+      <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"></i>
+      All writing
+    </a>
+
+    <div class="mb-4">
+      <span class="label label-teal">Article</span>
+    </div>
+
+    <h1 class="text-4xl md:text-5xl font-black text-[#0d1b2e] mb-4 leading-tight">
+      {{ post.title }}
+    </h1>
+    <p class="text-[#3d5578] text-lg mb-6 leading-relaxed">{{ post.excerpt }}</p>
+
+    <div class="flex items-center gap-4 text-xs font-mono text-[#7a96bb] mb-10 pb-8 border-b border-[rgba(37,99,235,0.08)]">
+      <span>{{ post.published_at|date:"F d, Y" }}</span>
+      {% if post.external_url %}
+      <span>·</span>
+      <a href="{{ post.external_url }}" target="_blank" rel="noopener"
+         class="text-[#0891b2] hover:underline">Read on external site →</a>
+      {% endif %}
+    </div>
+
+    {% if post.cover_image %}
+    <div class="mb-10 rounded-xl overflow-hidden border border-[rgba(37,99,235,0.10)]">
+      <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="w-full">
+    </div>
+    {% endif %}
+
+    <div class="prose max-w-none text-[#3d5578] leading-relaxed space-y-5
+                [&>h2]:text-[#0d1b2e] [&>h2]:font-bold [&>h2]:text-2xl [&>h2]:mt-10 [&>h2]:mb-4
+                [&>h3]:text-[#0d1b2e] [&>h3]:font-semibold [&>h3]:text-xl [&>h3]:mt-8 [&>h3]:mb-3
+                [&>p]:mb-5
+                [&>a]:text-[#0891b2]
+                [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2
+                [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2">
+      {{ post.content|safe }}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

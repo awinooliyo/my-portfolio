@@ -1,0 +1,305 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}My Process — Erick Awino{% endblock %}
+{% block meta_description %}How I approach software projects — from discovery and architecture to shipping and maintenance. A transparent look at how I work.{% endblock %}
+
+{% block content %}
+
+<div class="page-hero">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+    <a href="{% url 'home' %}" class="inline-flex items-center gap-2 text-sm text-[#7a96bb] hover:text-[#059669] transition mb-8 font-mono group">
+      <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"></i>
+      Home
+    </a>
+    <span class="label label-green">Process</span>
+    <h1 class="text-5xl md:text-6xl font-black text-[#0d1b2e] mb-4 leading-tight">How I Work</h1>
+    <p class="text-[#3d5578] text-lg max-w-2xl">
+      A transparent look at how I take a project from idea to production — including what I need from you and what you can expect from me.
+    </p>
+  </div>
+</div>
+
+<div class="py-20 bg-[#f7f9ff]">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+
+    <!-- The 5 steps -->
+    <div class="space-y-16 mb-24">
+
+      <!-- Step 1 -->
+      <div class="reveal">
+        <div class="flex gap-6 md:gap-10 items-start">
+          <div class="flex-shrink-0 text-center w-16">
+            <div class="step-num">01</div>
+          </div>
+          <div class="flex-1 pt-3">
+            <h2 class="text-2xl md:text-3xl font-black text-[#0d1b2e] mb-3">Discovery &amp; Scoping</h2>
+            <p class="text-[#3d5578] leading-relaxed mb-4">
+              Every project starts with deep understanding. Before I write a line of code, I need to understand your users, your constraints, your timeline, and what "success" looks like. I send a detailed discovery questionnaire and schedule a kick-off call.
+            </p>
+            <p class="text-[#3d5578] leading-relaxed mb-5">
+              This phase produces a <span class="text-[#0d1b2e] font-semibold">Project Brief</span> — a written document capturing goals, scope, success criteria, and known unknowns. This protects both of us.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip chip-backend text-xs">Requirements</span>
+              <span class="chip chip-backend text-xs">Stakeholder interviews</span>
+              <span class="chip chip-backend text-xs">Technical audit</span>
+              <span class="chip chip-backend text-xs">Scope definition</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-px h-12 ml-8 bg-gradient-to-b from-[rgba(34,211,160,0.30)] to-transparent"></div>
+
+      <!-- Step 2 -->
+      <div class="reveal reveal-delay-1">
+        <div class="flex gap-6 md:gap-10 items-start">
+          <div class="flex-shrink-0 text-center w-16">
+            <div class="step-num">02</div>
+          </div>
+          <div class="flex-1 pt-3">
+            <h2 class="text-2xl md:text-3xl font-black text-[#0d1b2e] mb-3">Architecture &amp; Design</h2>
+            <p class="text-[#3d5578] leading-relaxed mb-4">
+              I produce a technical architecture document before writing a single line of production code. This includes data models, API contracts, system boundaries, tech choices with justification, and deployment strategy.
+            </p>
+            <p class="text-[#3d5578] leading-relaxed mb-5">
+              I believe in <span class="text-[#0d1b2e] font-semibold">decision documentation</span> — you'll know why every major choice was made, so future engineers can maintain and evolve the system confidently.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip chip-devops text-xs">System design</span>
+              <span class="chip chip-devops text-xs">Data modeling</span>
+              <span class="chip chip-devops text-xs">API contracts</span>
+              <span class="chip chip-devops text-xs">Tech selection</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-px h-12 ml-8 bg-gradient-to-b from-[rgba(34,211,160,0.30)] to-transparent"></div>
+
+      <!-- Step 3 -->
+      <div class="reveal reveal-delay-1">
+        <div class="flex gap-6 md:gap-10 items-start">
+          <div class="flex-shrink-0 text-center w-16">
+            <div class="step-num">03</div>
+          </div>
+          <div class="flex-1 pt-3">
+            <h2 class="text-2xl md:text-3xl font-black text-[#0d1b2e] mb-3">Iterative Build</h2>
+            <p class="text-[#3d5578] leading-relaxed mb-4">
+              I build in weekly sprints with a demo at the end of each cycle. You see real, working software — not slide decks. Every milestone is tracked in a shared project board.
+            </p>
+            <p class="text-[#3d5578] leading-relaxed mb-5">
+              Code is written with <span class="text-[#0d1b2e] font-semibold">tests</span>, meaningful commit messages, and clear documentation. I practice CI/CD from day one so nothing breaks silently.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip chip-frontend text-xs">Weekly demos</span>
+              <span class="chip chip-frontend text-xs">TDD / Testing</span>
+              <span class="chip chip-frontend text-xs">Code review</span>
+              <span class="chip chip-frontend text-xs">CI/CD pipelines</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-px h-12 ml-8 bg-gradient-to-b from-[rgba(34,211,160,0.30)] to-transparent"></div>
+
+      <!-- Step 4 -->
+      <div class="reveal reveal-delay-1">
+        <div class="flex gap-6 md:gap-10 items-start">
+          <div class="flex-shrink-0 text-center w-16">
+            <div class="step-num">04</div>
+          </div>
+          <div class="flex-1 pt-3">
+            <h2 class="text-2xl md:text-3xl font-black text-[#0d1b2e] mb-3">Review &amp; Handoff</h2>
+            <p class="text-[#3d5578] leading-relaxed mb-4">
+              Before launch, we do a structured review: UAT, security check, performance audit, and documentation review. I write a handoff doc your team can actually use.
+            </p>
+            <p class="text-[#3d5578] leading-relaxed mb-5">
+              You get: deployment runbook, environment variables guide, database backup procedures, and a recorded walkthrough of the codebase.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip chip-languages text-xs">UAT</span>
+              <span class="chip chip-languages text-xs">Security review</span>
+              <span class="chip chip-languages text-xs">Performance audit</span>
+              <span class="chip chip-languages text-xs">Documentation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-px h-12 ml-8 bg-gradient-to-b from-[rgba(34,211,160,0.30)] to-transparent"></div>
+
+      <!-- Step 5 -->
+      <div class="reveal reveal-delay-1">
+        <div class="flex gap-6 md:gap-10 items-start">
+          <div class="flex-shrink-0 text-center w-16">
+            <div class="step-num">05</div>
+          </div>
+          <div class="flex-1 pt-3">
+            <h2 class="text-2xl md:text-3xl font-black text-[#0d1b2e] mb-3">Launch &amp; Support</h2>
+            <p class="text-[#3d5578] leading-relaxed mb-4">
+              I handle production deployment and monitor the system for the first 48 hours post-launch. After that, I offer a 30-day warranty window — bugs discovered in that window are fixed at no charge.
+            </p>
+            <p class="text-[#3d5578] leading-relaxed mb-5">
+              Ongoing maintenance and feature work are available on a retainer or time-and-materials basis.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip chip-arch text-xs">Production deploy</span>
+              <span class="chip chip-arch text-xs">Monitoring</span>
+              <span class="chip chip-arch text-xs">30-day warranty</span>
+              <span class="chip chip-arch text-xs">Ongoing support</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FAQ -->
+    <div class="mb-24 reveal">
+      <h2 class="text-3xl font-black text-[#0d1b2e] mb-8">Common Questions</h2>
+      <div class="space-y-4">
+
+        <details class="card p-6 group">
+          <summary class="text-[#0d1b2e] font-semibold cursor-pointer flex items-center justify-between">
+            How long does a typical project take?
+            <svg class="w-4 h-4 text-[#3d5578] group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <p class="text-[#3d5578] text-sm leading-relaxed mt-4">
+            A typical web application takes 6–12 weeks from kick-off to launch. Simple APIs or MVPs can be as fast as 2–4 weeks. Complex systems with integrations, custom admin dashboards, and data pipelines take 3–6 months. I always give a range after the discovery phase.
+          </p>
+        </details>
+
+        <details class="card p-6 group">
+          <summary class="text-[#0d1b2e] font-semibold cursor-pointer flex items-center justify-between">
+            Do you work with a team or solo?
+            <svg class="w-4 h-4 text-[#3d5578] group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <p class="text-[#3d5578] text-sm leading-relaxed mt-4">
+            I can work both ways. I'm effective as a solo engineer on projects up to ~6 months in scope. For larger engagements, I can embed in your team, lead a small contract team, or bring in trusted specialists (UI/UX, mobile, data).
+          </p>
+        </details>
+
+        <details class="card p-6 group">
+          <summary class="text-[#0d1b2e] font-semibold cursor-pointer flex items-center justify-between">
+            What technologies do you prefer?
+            <svg class="w-4 h-4 text-[#3d5578] group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <p class="text-[#3d5578] text-sm leading-relaxed mt-4">
+            My sweet spot is Django + PostgreSQL + Docker on the backend, React or Vue on the frontend, deployed on AWS/DigitalOcean/Hetzner with Nginx. That said, I'm tech-pragmatic — I'll use what's right for your project and what your team can maintain.
+          </p>
+        </details>
+
+        <details class="card p-6 group">
+          <summary class="text-[#0d1b2e] font-semibold cursor-pointer flex items-center justify-between">
+            What do you need from me as a client?
+            <svg class="w-4 h-4 text-[#3d5578] group-open:rotate-180 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <p class="text-[#3d5578] text-sm leading-relaxed mt-4">
+            A decision-maker I can reach, timely feedback on milestones, and clarity on priorities. The biggest project killer is slow feedback loops. I'll set up async communication channels that work for your timezone and availability.
+          </p>
+        </details>
+
+      </div>
+    </div>
+
+    <!-- Book a discovery call -->
+    <div class="cta-banner p-10 md:p-14 mb-12 reveal">
+      <div class="max-w-xl">
+        <span class="label label-green mb-4">Free Discovery Call</span>
+        <h2 class="text-3xl md:text-4xl font-black text-[#0d1b2e] mb-3 leading-tight">
+          Let's talk about your project.
+        </h2>
+        <p class="text-[#3d5578] mb-8 leading-relaxed">
+          Book a free 30-minute call. I'll ask questions, listen carefully, and tell you honestly whether I can help — and what it would take.
+        </p>
+        <a href="{% url 'work_with_me' %}#book" class="btn-primary">
+          Book a Discovery Call →
+        </a>
+      </div>
+    </div>
+
+    <!-- Booking form -->
+    <div id="book" class="reveal">
+      <h2 class="text-2xl font-black text-[#0d1b2e] mb-8">Book a Call</h2>
+      <div class="grid md:grid-cols-2 gap-10">
+        <form method="post" action="{% url 'book_appointment' %}" class="space-y-4">
+          {% csrf_token %}
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-mono text-[#3d5578] mb-2 uppercase tracking-wider">Name *</label>
+              <input type="text" name="name" required class="form-input" placeholder="Your name">
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-[#3d5578] mb-2 uppercase tracking-wider">Email *</label>
+              <input type="email" name="email" required class="form-input" placeholder="you@company.com">
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-mono text-[#3d5578] mb-2 uppercase tracking-wider">Date *</label>
+              <input type="date" name="date" required min="{{ today }}" class="form-input">
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-[#3d5578] mb-2 uppercase tracking-wider">Time *</label>
+              <select name="time_slot" required class="form-input">
+                <option value="">Select a time</option>
+                {% for value, label in time_slots %}
+                <option value="{{ value }}">{{ label }} EAT</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-[#3d5578] mb-2 uppercase tracking-wider">Purpose</label>
+            <select name="purpose" class="form-input">
+              {% for value, label in purposes %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-[#3d5578] mb-2 uppercase tracking-wider">Brief description</label>
+            <textarea name="message" rows="3" class="form-input resize-none" placeholder="What would you like to discuss?"></textarea>
+          </div>
+          <button type="submit" class="btn-primary w-full sm:w-auto">Request Booking</button>
+        </form>
+        <div class="space-y-5">
+          <div class="card p-5">
+            <h3 class="text-[#0d1b2e] font-bold mb-3">What to expect</h3>
+            <ul class="space-y-2.5 text-[#3d5578] text-sm">
+              <li class="flex gap-3"><span class="text-[#059669] font-bold flex-shrink-0">→</span> 30-minute video call via Google Meet</li>
+              <li class="flex gap-3"><span class="text-[#059669] font-bold flex-shrink-0">→</span> Confirmation + calendar invite within 24h</li>
+              <li class="flex gap-3"><span class="text-[#059669] font-bold flex-shrink-0">→</span> Completely free, no commitment</li>
+              <li class="flex gap-3"><span class="text-[#059669] font-bold flex-shrink-0">→</span> I'll send a short brief beforehand</li>
+            </ul>
+          </div>
+          <div class="card p-5">
+            <h3 class="text-[#0d1b2e] font-bold mb-3">Good for</h3>
+            <div class="flex flex-wrap gap-2">
+              {% for _, label in purposes %}
+              <span class="chip chip-languages">{{ label }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const today = "{{ today }}";
+</script>
+{% endblock %}

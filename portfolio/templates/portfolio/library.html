@@ -1,0 +1,119 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Library — Erick Awino{% endblock %}
+{% block meta_description %}Books, courses, tutorials, and articles that have shaped how I think and build software.{% endblock %}
+
+{% block content %}
+
+<div class="page-hero">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+    <a href="{% url 'home' %}" class="inline-flex items-center gap-2 text-sm text-[#7a96bb] hover:text-[#7c3aed] transition mb-8 font-mono group">
+      <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"></i>
+      Home
+    </a>
+    <span class="label label-purple">Library</span>
+    <h1 class="text-5xl md:text-6xl font-black text-[#0d1b2e] mb-4 leading-tight">Books & Resources</h1>
+    <p class="text-[#3d5578] text-lg max-w-2xl">
+      The books, courses, articles, and tutorials that shaped my thinking — curated with ratings and notes.
+    </p>
+  </div>
+</div>
+
+<div class="py-16 bg-[#f7f9ff] min-h-screen">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+
+    <!-- Tabs -->
+    <div class="flex flex-wrap gap-1 mb-10 border-b border-[rgba(37,99,235,0.10)] pb-0">
+      <a href="{% url 'library' %}"
+         class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
+                {% if not active_type %}border-[#a78bfa] text-[#7c3aed]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+        All
+      </a>
+      <a href="?type=book"
+         class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
+                {% if active_type == 'book' %}border-[#f6b847] text-[#d97706]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+        Books
+      </a>
+      <a href="?type=course"
+         class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
+                {% if active_type == 'course' %}border-[#4f8ef7] text-[#2563eb]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+        Courses
+      </a>
+      <a href="?type=tutorial"
+         class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
+                {% if active_type == 'tutorial' %}border-[#c4b5fd] text-[#c4b5fd]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+        Tutorials
+      </a>
+      <a href="?type=article"
+         class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
+                {% if active_type == 'article' %}border-[#22d3a0] text-[#059669]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+        Articles
+      </a>
+      <a href="?type=video"
+         class="tab-btn px-5 py-3 text-sm font-medium pb-3 border-b-2
+                {% if active_type == 'video' %}border-[#22d3ee] text-[#0891b2]{% else %}border-transparent text-[#3d5578] hover:text-[#0d1b2e]{% endif %}">
+        Videos
+      </a>
+    </div>
+
+    {% if resources %}
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {% for res in resources %}
+      <div class="card p-6 reveal reveal-delay-{{ forloop.counter }}">
+        <div class="flex items-start justify-between mb-4">
+          <span class="pill pill-{{ res.resource_type }}">{{ res.get_resource_type_display }}</span>
+          {% if res.is_featured %}
+          <span class="text-[#d97706] text-xs font-mono">★ featured</span>
+          {% endif %}
+        </div>
+
+        <h3 class="text-[#0d1b2e] font-bold text-base leading-snug mb-1 line-clamp-2">{{ res.title }}</h3>
+
+        {% if res.author %}<p class="text-[#7a96bb] text-xs font-mono mb-3">by {{ res.author }}</p>{% endif %}
+
+        {% if res.description %}
+        <p class="text-[#3d5578] text-sm leading-relaxed line-clamp-3 mb-4">{{ res.description }}</p>
+        {% endif %}
+
+        <div class="flex items-center justify-between mt-auto pt-3">
+          {% if res.rating %}
+          <div class="flex gap-0.5">
+            {% for i in "12345" %}
+            <svg class="w-3.5 h-3.5 {% if forloop.counter <= res.rating %}star-filled{% else %}star-empty{% endif %}"
+                 fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div></div>
+          {% endif %}
+          {% if res.url %}
+          <a href="{{ res.url }}" target="_blank" rel="noopener"
+             class="text-xs font-mono text-[#3d5578] hover:text-[#7c3aed] transition flex items-center gap-1">
+            View
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+          {% endif %}
+        </div>
+
+        {% if res.date_consumed %}
+        <p class="text-[#7a96bb] text-xs font-mono mt-2">Read {{ res.date_consumed|date:"M Y" }}</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="py-24 text-center">
+      <p class="text-[#3d5578] font-mono text-sm">// no resources matching this filter yet</p>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

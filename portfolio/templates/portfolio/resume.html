@@ -1,55 +1,198 @@
 {% extends 'portfolio/base.html' %}
+{% load static %}
 
-{% block title %}Resume — Erick Awino{% endblock %}
+{% block title %}Resume - Erick Awino{% endblock %}
+{% block meta_description %}Erick Awino's resume. Full-Stack Software Engineer with deep expertise in Python, Django, TypeScript, React, and Java.{% endblock %}
 
 {% block content %}
-<div class="pt-16 min-h-screen flex flex-col">
+<div class="pt-16 min-h-screen flex flex-col bg-[#f7f9ff]">
 
-  <!-- Toolbar -->
-  <div class="bg-[#161b27] border-b border-slate-800/60 px-6 py-3 flex items-center justify-between">
-    <a href="{% url 'home' %}"
-       class="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition font-mono group">
-      <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-      </svg>
-      Back
-    </a>
+  <!-- Sticky toolbar -->
+  <div class="sticky top-16 z-40 bg-[#eef3fc] border-b border-[rgba(37,99,235,0.10)] px-6 py-3">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <a href="{% url 'home' %}"
+           class="inline-flex items-center gap-2 text-sm text-[#3d5578] hover:text-[#0d1b2e] transition font-mono group">
+          <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          Back
+        </a>
+        <span class="text-[#7a96bb]">|</span>
+        <span class="font-mono text-[#2563eb] text-sm font-bold">Erick Awino - Resume</span>
+      </div>
 
-    <span class="font-mono text-blue-400 text-sm">Erick Awino — Resume</span>
-
-    {% if site_config and site_config.resume %}
-    <a href="{{ site_config.resume.url }}" download
-       class="inline-flex items-center gap-2 px-4 py-1.5 text-sm border border-slate-700/60 text-slate-300 hover:border-blue-400 hover:text-blue-400 rounded-lg transition">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-      </svg>
-      Download PDF
-    </a>
-    {% else %}
-    <span></span>
-    {% endif %}
+      <div class="flex items-center gap-3">
+        {% if site_config and site_config.resume %}
+        <a href="{{ site_config.resume.url }}" target="_blank" rel="noopener"
+           class="btn-secondary !py-2 !px-4 !min-h-0 text-xs">
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          Open full screen
+        </a>
+        <a href="{{ site_config.resume.url }}" download
+           class="btn-primary !py-2 !px-4 !min-h-0 text-xs">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          Download PDF
+        </a>
+        {% endif %}
+        <a href="{% url 'work_with_me' %}" class="btn-red !py-2 !px-4 !min-h-0 text-xs hidden sm:flex">
+          Hire Me
+        </a>
+      </div>
+    </div>
   </div>
 
   <!-- PDF viewer -->
-  <div class="flex-1 bg-[#0f1117]">
-    {% if site_config and site_config.resume %}
-      <embed
-        src="{{ site_config.resume.url }}"
-        type="application/pdf"
-        class="w-full"
-        style="height: calc(100vh - 9rem);">
-    {% else %}
-    <div class="flex flex-col items-center justify-center h-[70vh] text-center px-6">
-      <svg class="w-12 h-12 text-slate-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-      </svg>
-      <p class="text-slate-500 font-mono text-sm mb-2">No resume uploaded yet</p>
-      <a href="/admin/portfolio/siteconfig/1/change/" class="text-blue-400 text-sm hover:underline">
-        Upload one in the admin →
-      </a>
-    </div>
-    {% endif %}
+  {% if site_config and site_config.resume %}
+  <div class="flex-1 bg-[#f0f4ff]">
+    <iframe
+      src="{{ site_config.resume.url }}"
+      class="w-full border-0"
+      style="height: calc(100vh - 8rem);"
+      title="Erick Awino Resume">
+      <div class="flex flex-col items-center justify-center py-24 text-center px-6">
+        <p class="text-[#3d5578] font-mono text-sm mb-4">
+          Your browser cannot display PDFs inline.
+        </p>
+        <a href="{{ site_config.resume.url }}" target="_blank" class="btn-primary">
+          Open PDF in new tab
+        </a>
+      </div>
+    </iframe>
   </div>
+
+  {% else %}
+  <!-- HTML resume fallback when no PDF is uploaded -->
+  <div class="flex-1 py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+
+      <!-- Header banner -->
+      <div class="cta-banner p-8 mb-10 text-center">
+        <p class="text-xs font-mono text-[#7a96bb] mb-3">// resume PDF not uploaded yet - upload via admin panel</p>
+        <h2 class="text-2xl font-black text-[#0d1b2e] mb-2">Erick Awino</h2>
+        <p class="text-[#2563eb] font-semibold mb-1">Full-Stack Software Engineer</p>
+        <p class="text-[#3d5578] text-sm">Nairobi, Kenya | erick.otieno89@gmail.com</p>
+        <div class="flex justify-center gap-4 mt-4 text-sm">
+          <a href="https://github.com/awinooliyo" target="_blank" rel="noopener"
+             class="text-[#3d5578] hover:text-[#0d1b2e] transition">GitHub</a>
+          <a href="https://ke.linkedin.com/in/erick-awino-7803abbb" target="_blank" rel="noopener"
+             class="text-[#3d5578] hover:text-[#60b8e0] transition">LinkedIn</a>
+          <a href="https://dev.to/awinooliyo" target="_blank" rel="noopener"
+             class="text-[#3d5578] hover:text-[#0d1b2e] transition">Dev.to</a>
+        </div>
+      </div>
+
+      <!-- Professional summary -->
+      <div class="card p-8 mb-6">
+        <h3 class="text-xs font-mono uppercase tracking-widest text-[#2563eb] mb-4">Professional Summary</h3>
+        <p class="text-[#3d5578] leading-relaxed">
+          Full-Stack Software Engineer with strong depth in Python and Django backend systems and working
+          knowledge across TypeScript, Java, React, Vue, and C. ALX Africa Software Engineering graduate
+          with hands-on experience shipping production-grade web systems from architecture through deployment.
+          Comfortable joining teams at any level, picking up context fast, and contributing from day one.
+          Based in Nairobi, Kenya and open to remote opportunities worldwide.
+        </p>
+      </div>
+
+      <!-- Core skills -->
+      <div class="card p-8 mb-6">
+        <h3 class="text-xs font-mono uppercase tracking-widest text-[#059669] mb-6">Core Skills</h3>
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div>
+            <p class="text-xs font-mono text-[#7a96bb] uppercase tracking-wider mb-3">Backend</p>
+            <div class="flex flex-wrap gap-2">
+              {% for s in "Python,Django,FastAPI,PostgreSQL,REST APIs,Spring Boot,Flask,SQLAlchemy" %}
+              <span class="chip chip-backend text-xs">{{ s }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-[#7a96bb] uppercase tracking-wider mb-3">Frontend</p>
+            <div class="flex flex-wrap gap-2">
+              {% for s in "TypeScript,React,Vue.js,Next.js,Angular,Nuxt.js,Tailwind CSS" %}
+              <span class="chip chip-frontend text-xs">{{ s }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-[#7a96bb] uppercase tracking-wider mb-3">Languages</p>
+            <div class="flex flex-wrap gap-2">
+              {% for s in "Python,TypeScript,JavaScript,Java,C,SQL,Bash" %}
+              <span class="chip chip-languages text-xs">{{ s }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-[#7a96bb] uppercase tracking-wider mb-3">DevOps</p>
+            <div class="flex flex-wrap gap-2">
+              {% for s in "Docker,Nginx,Linux,Git,GitHub Actions,CI/CD" %}
+              <span class="chip chip-devops text-xs">{{ s }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projects highlight -->
+      <div class="card p-8 mb-6">
+        <h3 class="text-xs font-mono uppercase tracking-widest text-[#d97706] mb-6">Selected Projects</h3>
+        <div class="space-y-5">
+          <div>
+            <h4 class="text-[#0d1b2e] font-bold">KiddingZone</h4>
+            <p class="text-xs font-mono text-[#7a96bb] mb-1">Django, Wagtail CMS, PostgreSQL, Docker</p>
+            <p class="text-[#3d5578] text-sm leading-relaxed">
+              Production content platform for kids' bike and gear reviews with full schema.org markup,
+              IndexNow integration, and Docker + Nginx deployment.
+            </p>
+          </div>
+          <div>
+            <h4 class="text-[#0d1b2e] font-bold">Audio Business ERP + POS</h4>
+            <p class="text-xs font-mono text-[#7a96bb] mb-1">Django, React, TypeScript, PostgreSQL</p>
+            <p class="text-[#3d5578] text-sm leading-relaxed">
+              Modular ERP system for audio equipment businesses covering inventory, sales, rentals,
+              service tracking, and financial reporting.
+            </p>
+          </div>
+          <div>
+            <h4 class="text-[#0d1b2e] font-bold">AirBnB Clone REST API</h4>
+            <p class="text-xs font-mono text-[#7a96bb] mb-1">Python, Flask, MySQL, SQLAlchemy</p>
+            <p class="text-[#3d5578] text-sm leading-relaxed">
+              Complete RESTful API backend with authentication, resource management,
+              and dual storage engines. Built during ALX Africa.
+            </p>
+          </div>
+          <div>
+            <h4 class="text-[#0d1b2e] font-bold">Simple Shell</h4>
+            <p class="text-xs font-mono text-[#7a96bb] mb-1">C, UNIX, Systems Programming</p>
+            <p class="text-[#3d5578] text-sm leading-relaxed">
+              Fully functional UNIX shell in C: command parsing, fork/execve, PATH resolution,
+              built-in commands, and signal handling.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="card p-8 mb-6">
+        <h3 class="text-xs font-mono uppercase tracking-widest text-[#7c3aed] mb-6">Education</h3>
+        <div>
+          <h4 class="text-[#0d1b2e] font-bold">ALX Africa Software Engineering Program</h4>
+          <p class="text-[#3d5578] text-sm">Full-stack software engineering curriculum covering C, Python, JavaScript, systems programming, algorithms, and production deployment. Graduated with demonstrated project output.</p>
+        </div>
+      </div>
+
+      <div class="mt-8 p-5 rounded-xl border border-[rgba(37,99,235,0.15)] bg-[rgba(37,99,235,0.04)] text-center">
+        <p class="text-[#3d5578] text-sm mb-1">Want the full resume as a PDF?</p>
+        <a href="{% url 'work_with_me' %}" class="text-[#2563eb] text-sm font-semibold hover:underline">
+          Reach out via the Work With Me page
+        </a>
+        <span class="text-[#7a96bb] text-sm"> or upload it at </span>
+        <a href="/admin/portfolio/siteconfig/1/change/" class="text-[#7a96bb] text-sm hover:text-[#3d5578] transition">/admin</a>
+      </div>
+
+    </div>
+  </div>
+  {% endif %}
+
 </div>
 {% endblock %}
