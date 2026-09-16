@@ -175,6 +175,7 @@
 
       {% for project in projects %}
       {% cycle '#2563eb,#0891b2' '#d97706,#c2410c' '#059669,#0891b2' '#7c3aed,#4f46e5' '#be185d,#9f1239' '#0369a1,#065f46' as cover_grad silent %}
+      {% cycle 'globe' 'shield-check' 'bar-chart-2' 'database' 'terminal' 'layers' as cover_icon silent %}
 
       {% if forloop.first %}
       {# ── Featured card — 2-column wide ── #}
@@ -189,14 +190,16 @@
               <img src="{{ project.image.url }}" alt="{{ project.title }}"
                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
             {% else %}
-              {# Monogram — large, anchored bottom-right for visual balance #}
-              <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
-                <span class="font-black text-white/[0.12] leading-none select-none" style="font-size:min(30vw,9rem);">
-                  {{ project.title|first|upper }}
-                </span>
-              </div>
-              <div class="absolute inset-0 opacity-[0.06]"
+              {# Dot texture #}
+              <div class="absolute inset-0 opacity-[0.08]"
                    style="background-image:radial-gradient(circle,white 1px,transparent 1px);background-size:22px 22px;"></div>
+              {# Faint monogram watermark #}
+              <div class="absolute -bottom-6 -right-4 leading-none select-none pointer-events-none"
+                   style="font-size:min(40vw,11rem); font-weight:900; color:rgba(255,255,255,0.06);">{{ project.title|first|upper }}</div>
+              {# Large centered icon #}
+              <div class="absolute inset-0 flex items-center justify-center">
+                <i data-lucide="{{ cover_icon }}" class="w-16 h-16 text-white/40"></i>
+              </div>
             {% endif %}
             {# Badges over cover #}
             <div class="absolute top-3 left-3 flex gap-1.5">
@@ -268,11 +271,16 @@
             <img src="{{ project.image.url }}" alt="{{ project.title }}"
                  class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           {% else %}
-            <div class="absolute inset-0 flex items-end justify-start p-4">
-              <span class="font-black text-white/[0.15] leading-none select-none" style="font-size: 5rem;">{{ project.title|first|upper }}</span>
+            {# Dot texture #}
+            <div class="absolute inset-0 opacity-[0.08]"
+                 style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 22px 22px;"></div>
+            {# Faint oversized monogram as background texture #}
+            <div class="absolute -bottom-4 -right-4 leading-none select-none pointer-events-none"
+                 style="font-size:7rem; font-weight:900; color:rgba(255,255,255,0.07);">{{ project.title|first|upper }}</div>
+            {# Centered icon — the primary visual anchor #}
+            <div class="absolute inset-0 flex items-center justify-center">
+              <i data-lucide="{{ cover_icon }}" class="w-12 h-12 text-white/50"></i>
             </div>
-            <div class="absolute inset-0 opacity-[0.07]"
-                 style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 20px 20px;"></div>
           {% endif %}
           {# Status badge top-right #}
           <div class="absolute top-3 right-3">

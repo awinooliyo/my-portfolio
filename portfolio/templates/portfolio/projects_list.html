@@ -51,6 +51,7 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       {% for project in projects %}
       {% cycle '#2563eb,#0891b2' '#d97706,#c2410c' '#059669,#0891b2' '#7c3aed,#4f46e5' '#be185d,#9f1239' '#0369a1,#065f46' as cover_grad silent %}
+      {% cycle 'globe' 'shield-check' 'bar-chart-2' 'database' 'terminal' 'layers' as cover_icon silent %}
 
       <a href="{{ project.get_absolute_url }}"
          class="card group overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col reveal reveal-delay-{{ forloop.counter }}">
@@ -62,11 +63,13 @@
             <img src="{{ project.image.url }}" alt="{{ project.title }}"
                  class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           {% else %}
-            <div class="absolute inset-0 flex items-end justify-start p-5">
-              <span class="font-black text-white/[0.15] leading-none select-none" style="font-size:6rem;">{{ project.title|first|upper }}</span>
+            <div class="absolute inset-0 opacity-[0.08]"
+                 style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 22px 22px;"></div>
+            <div class="absolute -bottom-4 -right-4 leading-none select-none pointer-events-none"
+                 style="font-size:8rem; font-weight:900; color:rgba(255,255,255,0.07);">{{ project.title|first|upper }}</div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <i data-lucide="{{ cover_icon }}" class="w-14 h-14 text-white/45"></i>
             </div>
-            <div class="absolute inset-0 opacity-[0.07]"
-                 style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 20px 20px;"></div>
           {% endif %}
 
           {# Status top-right #}
