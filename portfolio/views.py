@@ -128,11 +128,16 @@ def contact(request):
 
 
 def resume(request):
+    from .models import WorkExperience
     try:
         config = SiteConfig.objects.get(pk=1)
     except SiteConfig.DoesNotExist:
         config = None
-    return render(request, "portfolio/resume.html", {"site_config": config})
+    return render(request, "portfolio/resume.html", {
+        "site_config": config,
+        "experiences": WorkExperience.objects.order_by("-start_date"),
+        "projects": Project.objects.filter(featured=True).order_by("order")[:5],
+    })
 
 
 def book_appointment(request):
