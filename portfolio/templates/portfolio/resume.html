@@ -4,64 +4,340 @@
 {% block title %}Resume — Erick Awino{% endblock %}
 {% block meta_description %}Erick Awino's resume. Full-Stack Software Engineer: Python, Django, TypeScript, React, Java.{% endblock %}
 
-{% block content %}
-<div class="flex flex-col bg-[#1a1f2e]" style="min-height:100vh;">
+{% block extra_head %}
+<style>
+  /* Viewer chrome */
+  #resume-shell { display: flex; flex-direction: column; height: 100vh; background: #3c3f45; }
 
-  {# Slim dark toolbar — PDF stands out against it #}
-  <div class="fixed top-0 left-0 right-0 z-50 h-14 bg-[#0d1117] border-b border-white/10
-              flex items-center justify-between px-5 shadow-lg">
-    <div class="flex items-center gap-4">
+  /* Top bar */
+  #resume-bar {
+    height: 3.25rem; flex-shrink: 0;
+    background: #1e2129; border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1rem; gap: 0.75rem; z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  }
+
+  /* Controls bar */
+  #resume-controls {
+    height: 2.75rem; flex-shrink: 0;
+    background: #2c2f38; border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 0 1rem;
+  }
+  .ctrl-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2rem; height: 2rem; border-radius: 6px;
+    background: transparent; border: 1px solid transparent;
+    color: #a0b4cc; cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .ctrl-btn:hover { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.12); }
+  .ctrl-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .ctrl-sep { width: 1px; height: 1.25rem; background: rgba(255,255,255,0.12); margin: 0 0.25rem; }
+  .ctrl-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; color: #a0b4cc;
+    min-width: 3.5rem; text-align: center;
+  }
+  #zoom-select {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    color: #a0b4cc; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    padding: 0.25rem 0.4rem; border-radius: 6px; cursor: pointer; outline: none;
+  }
+  #zoom-select:focus { border-color: #4f8ef7; }
+
+  /* Page viewport */
+  #pdf-viewport {
+    flex: 1; overflow-y: auto; overflow-x: auto;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 12px; padding: 20px 16px;
+    background: #3c3f45;
+    scroll-behavior: smooth;
+  }
+  #pdf-viewport::-webkit-scrollbar       { width: 6px; height: 6px; }
+  #pdf-viewport::-webkit-scrollbar-track { background: #2c2f38; }
+  #pdf-viewport::-webkit-scrollbar-thumb { background: #4a5568; border-radius: 3px; }
+
+  /* Individual page canvas */
+  .pdf-page-canvas {
+    display: block;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3);
+    border-radius: 2px;
+    max-width: 100%;
+  }
+
+  /* Page skeleton while rendering */
+  .pdf-page-skeleton {
+    background: #e5e7eb;
+    animation: pdf-shimmer 1.4s ease-in-out infinite;
+    border-radius: 2px;
+  }
+  @keyframes pdf-shimmer {
+    0%   { opacity: 0.4; }
+    50%  { opacity: 0.8; }
+    100% { opacity: 0.4; }
+  }
+
+  /* Loading overlay */
+  #pdf-loading {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1rem; background: #3c3f45;
+  }
+  .pdf-spinner {
+    width: 2.5rem; height: 2.5rem; border-radius: 50%;
+    border: 3px solid rgba(79,142,247,0.2);
+    border-top-color: #4f8ef7;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% if site_config and site_config.resume %}
+{# ── Full PDF.js viewer ── #}
+<div id="resume-shell">
+
+  {# Top bar #}
+  <div id="resume-bar">
+    <div class="flex items-center gap-3 min-w-0">
       <a href="{% url 'home' %}"
-         class="inline-flex items-center gap-1.5 text-sm text-[#7b95bc] hover:text-white transition font-mono group">
+         class="inline-flex items-center gap-1.5 text-sm text-[#7b95bc] hover:text-white transition font-mono group flex-shrink-0">
         <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"></i>
-        Back
+        <span class="hidden sm:inline">Back</span>
       </a>
-      <span class="text-[#3a4d6b]">|</span>
-      <span class="font-mono font-bold text-[#4f8ef7] text-sm hidden sm:block">Erick Awino — Resume</span>
+      <span class="text-[#3a4d6b] hidden sm:inline">|</span>
+      <span class="font-mono font-bold text-[#4f8ef7] text-sm truncate hidden sm:block">
+        Erick Awino — Resume
+      </span>
     </div>
 
-    <div class="flex items-center gap-2">
-      {% if site_config and site_config.resume %}
+    <div class="flex items-center gap-2 flex-shrink-0">
       <a href="{{ site_config.resume.url }}" target="_blank" rel="noopener"
-         class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg
-                border border-white/15 text-[#a0b4cc] hover:text-white hover:border-white/30 transition">
-        <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
-        <span class="hidden sm:inline">Full screen</span>
+         class="ctrl-btn !w-auto !px-3 text-xs font-medium gap-1.5">
+        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        <span class="hidden sm:inline">Open tab</span>
       </a>
       <a href="{{ site_config.resume.url }}" download="Erick_Awino_Resume.pdf"
          class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg
-                bg-[#2563eb] text-white hover:bg-[#1d4ed8] transition shadow-md">
+                bg-[#2563eb] text-white hover:bg-[#1d4ed8] transition">
         <i data-lucide="download" class="w-3.5 h-3.5"></i>
         Download
       </a>
-      {% endif %}
       <a href="{% url 'work_with_me' %}"
-         class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg
-                bg-[#dc2626] text-white hover:bg-[#b91c1c] transition hidden sm:inline-flex">
+         class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5
+                rounded-lg bg-[#dc2626] text-white hover:bg-[#b91c1c] transition">
         Hire Me
       </a>
     </div>
   </div>
 
-  {# PDF viewer — fills remaining viewport below toolbar #}
-  {% if site_config and site_config.resume %}
-  <div class="flex-1 pt-14">
-    <iframe
-      src="{{ site_config.resume.url }}#toolbar=0&navpanes=0&scrollbar=1"
-      class="w-full border-0 block"
-      style="height:calc(100vh - 3.5rem);"
-      title="Erick Awino Resume">
-      <div class="flex flex-col items-center justify-center h-full text-center p-8">
-        <i data-lucide="file-x" class="w-12 h-12 text-[#3a4d6b] mb-4"></i>
-        <p class="text-[#7b95bc] font-mono text-sm mb-4">Your browser cannot display PDFs inline.</p>
-        <a href="{{ site_config.resume.url }}" target="_blank" class="btn-primary">Open PDF</a>
-      </div>
-    </iframe>
+  {# Controls bar #}
+  <div id="resume-controls">
+    <button class="ctrl-btn" id="btn-prev" title="Previous page" disabled>
+      <i data-lucide="chevron-left" class="w-4 h-4"></i>
+    </button>
+    <span class="ctrl-label" id="page-display">— / —</span>
+    <button class="ctrl-btn" id="btn-next" title="Next page" disabled>
+      <i data-lucide="chevron-right" class="w-4 h-4"></i>
+    </button>
+
+    <div class="ctrl-sep"></div>
+
+    <button class="ctrl-btn" id="btn-zoom-out" title="Zoom out" disabled>
+      <i data-lucide="zoom-out" class="w-4 h-4"></i>
+    </button>
+    <select id="zoom-select" title="Zoom level" disabled>
+      <option value="0.6">60%</option>
+      <option value="0.75">75%</option>
+      <option value="0.9">90%</option>
+      <option value="1.0" selected>100%</option>
+      <option value="1.25">125%</option>
+      <option value="1.5">150%</option>
+      <option value="1.75">175%</option>
+      <option value="2.0">200%</option>
+    </select>
+    <button class="ctrl-btn" id="btn-zoom-in" title="Zoom in" disabled>
+      <i data-lucide="zoom-in" class="w-4 h-4"></i>
+    </button>
+
+    <div class="ctrl-sep hidden sm:block"></div>
+    <span class="ctrl-label hidden sm:block" id="file-name" style="min-width:10rem; text-align:left; color:#4a6280;">
+      Erick_Awino_Resume.pdf
+    </span>
   </div>
 
-  {% else %}
-  {# Structured HTML resume when no PDF uploaded #}
-  <div class="flex-1 pt-14 bg-[#f7f9ff] py-16">
+  {# Page area #}
+  <div id="pdf-viewport" style="position:relative;">
+    <div id="pdf-loading">
+      <div class="pdf-spinner"></div>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:#7b95bc;">
+        Loading resume…
+      </span>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"
+        integrity="sha512-q+4liFwdPC/bNdhUpZx6aXDx/h77yEQtn4I1slHydcbZK34nLaR3cAeYSJshoxIOq0LCGMVRbMVIE08b4pAkQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  const PDFURL  = '{{ site_config.resume.url }}';
+  const WORKER  = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const lib      = window['pdfjs-dist/build/pdf'];
+  lib.GlobalWorkerOptions.workerSrc = WORKER;
+
+  const viewport    = document.getElementById('pdf-viewport');
+  const loadingEl   = document.getElementById('pdf-loading');
+  const pageDisplay = document.getElementById('page-display');
+  const btnPrev     = document.getElementById('btn-prev');
+  const btnNext     = document.getElementById('btn-next');
+  const btnZoomOut  = document.getElementById('btn-zoom-out');
+  const btnZoomIn   = document.getElementById('btn-zoom-in');
+  const zoomSelect  = document.getElementById('zoom-select');
+
+  const SCALES = [0.6, 0.75, 0.9, 1.0, 1.25, 1.5, 1.75, 2.0];
+  let pdfDoc    = null;
+  let scale     = 1.0;
+  let rendering = false;
+  let canvases  = [];
+
+  /* ── Render all pages at given scale ── */
+  async function renderAll(newScale) {
+    if (rendering) return;
+    rendering = true;
+
+    scale = newScale;
+    zoomSelect.value = String(scale);
+    btnZoomOut.disabled = SCALES.indexOf(scale) <= 0;
+    btnZoomIn.disabled  = SCALES.indexOf(scale) >= SCALES.length - 1;
+
+    /* Show skeletons immediately while re-rendering */
+    viewport.innerHTML = '';
+    canvases = [];
+
+    for (let p = 1; p <= pdfDoc.numPages; p++) {
+      const page    = await pdfDoc.getPage(p);
+      const vp      = page.getViewport({ scale });
+      const canvas  = document.createElement('canvas');
+      canvas.className = 'pdf-page-canvas';
+      canvas.dataset.page = p;
+      canvas.width  = Math.floor(vp.width);
+      canvas.height = Math.floor(vp.height);
+      viewport.appendChild(canvas);
+      canvases.push(canvas);
+
+      await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+    }
+
+    rendering = false;
+    updatePageDisplay();
+  }
+
+  /* ── Page counter via IntersectionObserver ── */
+  let currentPage = 1;
+  function updatePageDisplay() {
+    pageDisplay.textContent = `${currentPage} / ${pdfDoc ? pdfDoc.numPages : '—'}`;
+    btnPrev.disabled = currentPage <= 1;
+    btnNext.disabled = currentPage >= (pdfDoc ? pdfDoc.numPages : 1);
+  }
+
+  function setupPageObserver() {
+    const io = new IntersectionObserver((entries) => {
+      let best = null, bestRatio = 0;
+      entries.forEach(e => {
+        if (e.intersectionRatio > bestRatio) {
+          bestRatio = e.intersectionRatio;
+          best = e.target;
+        }
+      });
+      if (best) {
+        currentPage = parseInt(best.dataset.page, 10);
+        updatePageDisplay();
+      }
+    }, { root: viewport, threshold: Array.from({ length: 11 }, (_, i) => i / 10) });
+
+    canvases.forEach(c => io.observe(c));
+  }
+
+  /* ── Scroll to page ── */
+  function scrollToPage(n) {
+    const c = canvases[n - 1];
+    if (c) c.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ── Controls ── */
+  btnPrev.addEventListener('click', () => { if (currentPage > 1) scrollToPage(currentPage - 1); });
+  btnNext.addEventListener('click', () => { if (pdfDoc && currentPage < pdfDoc.numPages) scrollToPage(currentPage + 1); });
+
+  btnZoomOut.addEventListener('click', () => {
+    const idx = SCALES.indexOf(scale);
+    if (idx > 0) renderAll(SCALES[idx - 1]).then(setupPageObserver);
+  });
+  btnZoomIn.addEventListener('click', () => {
+    const idx = SCALES.indexOf(scale);
+    if (idx < SCALES.length - 1) renderAll(SCALES[idx + 1]).then(setupPageObserver);
+  });
+  zoomSelect.addEventListener('change', () => {
+    renderAll(parseFloat(zoomSelect.value)).then(setupPageObserver);
+  });
+
+  /* ── Keyboard shortcuts ── */
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'SELECT') return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') btnNext.click();
+    if (e.key === 'ArrowUp'   || e.key === 'PageUp')   btnPrev.click();
+    if (e.key === '+' || e.key === '=') btnZoomIn.click();
+    if (e.key === '-')                  btnZoomOut.click();
+  });
+
+  /* ── Bootstrap ── */
+  lib.getDocument(PDFURL).promise.then(async (pdf) => {
+    pdfDoc = pdf;
+    loadingEl.remove();
+
+    /* Enable controls */
+    [btnPrev, btnNext, btnZoomOut, btnZoomIn, zoomSelect].forEach(el => el.disabled = false);
+    updatePageDisplay();
+
+    await renderAll(scale);
+    setupPageObserver();
+
+  }).catch(err => {
+    loadingEl.innerHTML = `
+      <i data-lucide="alert-circle" class="w-10 h-10" style="color:#f87171;"></i>
+      <p style="font-family:monospace; font-size:0.75rem; color:#f87171;">Failed to load PDF — ${err.message}</p>
+      <a href="${PDFURL}" target="_blank"
+         style="font-size:0.8rem; color:#4f8ef7; text-decoration:underline;">Open directly</a>`;
+    lucide.createIcons();
+  });
+})();
+</script>
+
+{% else %}
+{# ── No PDF uploaded: structured HTML resume ── #}
+<div class="flex flex-col bg-[#1e2129]" style="min-height:100vh;">
+  <div class="h-14 flex items-center justify-between px-5 bg-[#1e2129] border-b border-white/10">
+    <a href="{% url 'home' %}" class="inline-flex items-center gap-1.5 text-sm text-[#7b95bc] hover:text-white transition font-mono group">
+      <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"></i>
+      Back
+    </a>
+    <span class="font-mono font-bold text-[#4f8ef7] text-sm">Erick Awino — Resume</span>
+    <a href="{% url 'work_with_me' %}" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#dc2626] text-white hover:bg-[#b91c1c] transition">
+      Hire Me
+    </a>
+  </div>
+
+  <div class="flex-1 bg-[#f7f9ff] py-14">
     <div class="max-w-3xl mx-auto px-6">
 
       <div class="bg-[#0d1b2e] rounded-2xl p-10 mb-8 text-center">
@@ -82,22 +358,10 @@
       <div class="card p-7 mb-5">
         <h2 class="text-xs font-mono uppercase tracking-widest text-[#059669] mb-5">Skills</h2>
         <div class="grid sm:grid-cols-2 gap-5">
-          <div>
-            <p class="text-xs font-mono text-[#7a96bb] uppercase tracking-wider mb-2">Backend</p>
-            <div class="flex flex-wrap gap-1.5">{% for s in "Python,Django,FastAPI,Spring Boot,PostgreSQL,REST APIs" %}<span class="chip chip-backend" style="font-size:0.72rem;">{{ s }}</span>{% endfor %}</div>
-          </div>
-          <div>
-            <p class="text-xs font-mono text-[#7a96bb] uppercase tracking-wider mb-2">Frontend</p>
-            <div class="flex flex-wrap gap-1.5">{% for s in "TypeScript,React,Vue.js,Next.js,Angular,Tailwind CSS" %}<span class="chip chip-frontend" style="font-size:0.72rem;">{{ s }}</span>{% endfor %}</div>
-          </div>
-          <div>
-            <p class="text-xs font-mono text-[#7a96bb] uppercase tracking-wider mb-2">Languages</p>
-            <div class="flex flex-wrap gap-1.5">{% for s in "Python,TypeScript,JavaScript,Java,C,SQL,Bash" %}<span class="chip chip-languages" style="font-size:0.72rem;">{{ s }}</span>{% endfor %}</div>
-          </div>
-          <div>
-            <p class="text-xs font-mono text-[#7a96bb] uppercase tracking-wider mb-2">DevOps</p>
-            <div class="flex flex-wrap gap-1.5">{% for s in "Docker,Nginx,Linux,Git,GitHub Actions,CI/CD" %}<span class="chip chip-devops" style="font-size:0.72rem;">{{ s }}</span>{% endfor %}</div>
-          </div>
+          <div><p class="text-xs font-mono text-[#7a96bb] uppercase tracking-wider mb-2">Backend</p><div class="flex flex-wrap gap-1.5">{% for s in "Python,Django,FastAPI,Spring Boot,PostgreSQL,REST APIs" %}<span class="chip chip-backend" style="font-size:0.72rem;">{{ s }}</span>{% endfor %}</div></div>
+          <div><p class="text-xs font-mono text-[#7a96bb] uppercase tracking-wider mb-2">Frontend</p><div class="flex flex-wrap gap-1.5">{% for s in "TypeScript,React,Vue.js,Next.js,Angular,Tailwind CSS" %}<span class="chip chip-frontend" style="font-size:0.72rem;">{{ s }}</span>{% endfor %}</div></div>
+          <div><p class="text-xs font-mono text-[#7a96bb] uppercase tracking-wider mb-2">Languages</p><div class="flex flex-wrap gap-1.5">{% for s in "Python,TypeScript,JavaScript,Java,C,SQL,Bash" %}<span class="chip chip-languages" style="font-size:0.72rem;">{{ s }}</span>{% endfor %}</div></div>
+          <div><p class="text-xs font-mono text-[#7a96bb] uppercase tracking-wider mb-2">DevOps</p><div class="flex flex-wrap gap-1.5">{% for s in "Docker,Nginx,Linux,Git,GitHub Actions,CI/CD" %}<span class="chip chip-devops" style="font-size:0.72rem;">{{ s }}</span>{% endfor %}</div></div>
         </div>
       </div>
 
@@ -107,7 +371,7 @@
           <div><h3 class="text-[#0d1b2e] font-bold">KiddingZone</h3><p class="text-xs font-mono text-[#7a96bb] mb-1">Django, Wagtail CMS, PostgreSQL, Docker</p><p class="text-[#3d5578] text-sm">Production CMS with schema.org markup, IndexNow, Docker + Nginx.</p></div>
           <div><h3 class="text-[#0d1b2e] font-bold">Audio Business ERP + POS</h3><p class="text-xs font-mono text-[#7a96bb] mb-1">Django, React, TypeScript, PostgreSQL</p><p class="text-[#3d5578] text-sm">Modular ERP covering inventory, sales, rentals, and financial reporting.</p></div>
           <div><h3 class="text-[#0d1b2e] font-bold">AirBnB Clone REST API</h3><p class="text-xs font-mono text-[#7a96bb] mb-1">Python, Flask, MySQL, SQLAlchemy</p><p class="text-[#3d5578] text-sm">Full REST API with auth, dual storage engines. ALX Africa capstone.</p></div>
-          <div><h3 class="text-[#0d1b2e] font-bold">Simple Shell</h3><p class="text-xs font-mono text-[#7a96bb] mb-1">C, UNIX, Systems Programming</p><p class="text-[#3d5578] text-sm">UNIX shell: fork/execve, PATH resolution, built-ins, signal handling.</p></div>
+          <div><h3 class="text-[#0d1b2e] font-bold">Simple Shell</h3><p class="text-xs font-mono text-[#7a96bb] mb-1">C, UNIX, Systems Programming</p><p class="text-[#3d5578] text-sm">UNIX shell in C: fork/execve, PATH resolution, built-ins, signal handling.</p></div>
         </div>
       </div>
 
@@ -118,13 +382,11 @@
       </div>
 
       <p class="text-center text-xs font-mono text-[#7a96bb]">
-        Want the full PDF?
-        <a href="{% url 'work_with_me' %}" class="text-[#2563eb] hover:underline ml-1">Reach out</a>
-        or upload it at <a href="/admin/portfolio/siteconfig/1/change/" class="text-[#7a96bb] hover:text-[#3d5578] transition">/admin</a>.
+        Upload the PDF via <a href="/admin/portfolio/siteconfig/1/change/" class="text-[#2563eb] hover:underline">/admin</a> to enable the full viewer.
       </p>
     </div>
   </div>
-  {% endif %}
-
 </div>
+{% endif %}
+
 {% endblock %}

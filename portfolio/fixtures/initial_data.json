@@ -51,7 +51,7 @@
     "tagline": "Production kids' bike and gear review platform built with Django and Wagtail CMS",
     "description": "A full-featured content platform for kids' bike and cycling gear reviews. Built with Django + Wagtail CMS, featuring product review pages with star ratings and affiliate links, best-picks roundup pages, a helmet sizer tool, author trust system with E-E-A-T schema, IndexNow integration for instant search indexing, comparison tool, and full JSON-LD schema.org markup. Deployed with Docker + Nginx + PostgreSQL.",
     "tech_stack": ["Django", "Wagtail CMS", "PostgreSQL", "Docker", "Nginx", "Tailwind CSS", "Python"],
-    "github_url": "", "live_url": "", "image": null,
+    "github_url": "", "live_url": "https://kiddingzone.com", "image": null,
     "featured": true, "order": 1, "status": "completed",
     "created_at": "2025-07-01T00:00:00Z"
   }},
